@@ -53,7 +53,7 @@ export function ProductCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Link href={`/san-pham/${product.slug}`} className="block">
+      <Link href={`/products/${product.slug}`} className="block">
         <div className="relative overflow-hidden bg-warm">
           <ProductMedia image={product.images[0]} ratio="3/4" />
           <div
@@ -99,7 +99,7 @@ export function ProductCard({
             tone: "success",
             title: added ? "Đã lưu vào Yêu thích" : "Đã bỏ khỏi Yêu thích",
             body: product.name,
-            action: added ? { label: "Xem danh sách", href: "/yeu-thich" } : undefined,
+            action: added ? { label: "Xem danh sách", href: "/wishlist" } : undefined,
           });
         }}
         className={cn(
@@ -114,7 +114,7 @@ export function ProductCard({
       <div className="pt-4 transition-transform duration-500 ease-luxe group-hover:-translate-y-0.5">
         <p className="eyebrow text-ink-3">{product.brandLine}</p>
         <h3 className="mt-1.5 text-[14.5px] leading-snug">
-          <Link href={`/san-pham/${product.slug}`} className="link-line link-underline-in">
+          <Link href={`/products/${product.slug}`} className="link-line link-underline-in">
             {product.name}
           </Link>
         </h3>

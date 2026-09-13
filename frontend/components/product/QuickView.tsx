@@ -128,7 +128,7 @@ export function QuickView({ product, onClose }: { product: Product | null; onClo
           </div>
 
           <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-            <Link href={`/san-pham/${product.slug}`} className="btn flex-1" onClick={onClose}>
+            <Link href={`/products/${product.slug}`} className="btn flex-1" onClick={onClose}>
               Chọn ngày & thuê
             </Link>
             <button

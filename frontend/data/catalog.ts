@@ -120,9 +120,9 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const CATEGORY_GROUPS: { key: Category["group"]; label: string; href: string; blurb: string }[] = [
-  { key: "women", label: "Nữ", href: "/danh-muc/nu", blurb: "Áo dài, đầm dạ hội, váy cưới" },
-  { key: "men", label: "Nam", href: "/danh-muc/nam", blurb: "Vest, tuxedo, áo dài nam" },
-  { key: "accessories", label: "Phụ kiện", href: "/danh-muc/phu-kien", blurb: "Clutch, trang sức" },
+  { key: "women", label: "Nữ", href: "/collections/nu", blurb: "Áo dài, đầm dạ hội, váy cưới" },
+  { key: "men", label: "Nam", href: "/collections/nam", blurb: "Vest, tuxedo, áo dài nam" },
+  { key: "accessories", label: "Phụ kiện", href: "/collections/phu-kien", blurb: "Clutch, trang sức" },
 ];
 
 /** `products.occasion` — dịp sử dụng (json) */

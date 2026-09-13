@@ -58,7 +58,7 @@ export function HomeDateBar() {
               {mounted && hasRange ? "Đổi ngày" : "Chọn ngày thuê"}
             </button>
             {mounted && hasRange && (
-              <Link href="/danh-muc/tat-ca" className="btn btn-sm">
+              <Link href="/collections/tat-ca" className="btn btn-sm">
                 Xem đồ còn trống
               </Link>
             )}

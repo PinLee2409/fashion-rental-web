@@ -7,7 +7,7 @@ export function generateStaticParams() {
   return PRODUCTS.map((product) => ({ slug: product.slug }));
 }
 
-export async function generateMetadata(props: PageProps<"/san-pham/[slug]">): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/products/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const product = getProduct(slug);
   if (!product) return { title: "Không tìm thấy sản phẩm" };
@@ -17,7 +17,7 @@ export async function generateMetadata(props: PageProps<"/san-pham/[slug]">): Pr
   };
 }
 
-export default async function ProductPage(props: PageProps<"/san-pham/[slug]">) {
+export default async function ProductPage(props: PageProps<"/products/[slug]">) {
   const { slug } = await props.params;
   const product = getProduct(slug);
   if (!product) notFound();

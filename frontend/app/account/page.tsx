@@ -44,7 +44,7 @@ export default function AccountOverviewPage() {
       <section>
         <Reveal as="header" className="flex items-end justify-between gap-4 pb-5">
           <h2 className="display-3">Cần bạn để mắt</h2>
-          <Link href="/tai-khoan/don-thue" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
+          <Link href="/account/rentals" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
             Tất cả đơn thuê
           </Link>
         </Reveal>
@@ -66,7 +66,7 @@ export default function AccountOverviewPage() {
       <section>
         <Reveal as="header" className="flex items-end justify-between gap-4 pb-5">
           <h2 className="display-3">Thông báo gần đây</h2>
-          <Link href="/tai-khoan/thong-bao" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
+          <Link href="/account/notifications" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
             Xem tất cả
           </Link>
         </Reveal>

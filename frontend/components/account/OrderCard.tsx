@@ -31,7 +31,7 @@ export function OrderCard({ order, compact }: { order: Order; compact?: boolean 
     <article className="border border-line bg-surface">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5">
         <div className="flex flex-wrap items-center gap-3">
-          <Link href={`/tai-khoan/don-thue/${order.code}`} className="link-line link-underline-in text-[13px]">
+          <Link href={`/account/rentals/${order.code}`} className="link-line link-underline-in text-[13px]">
             {order.code}
           </Link>
           <OrderStatusChip order={order} />
@@ -92,16 +92,16 @@ export function OrderCard({ order, compact }: { order: Order; compact?: boolean 
         <p className="text-[12px] text-ink-2">{meta.nextAction ?? " "}</p>
         <div className="flex gap-2">
           {canPay(order.status) && (
-            <Link href={`/tai-khoan/don-thue/${order.code}`} className="btn btn-sm">
+            <Link href={`/account/rentals/${order.code}`} className="btn btn-sm">
               Thanh toán
             </Link>
           )}
           {canReview(order.status) && !order.items.every((i) => i.reviewed) && (
-            <Link href="/tai-khoan/danh-gia" className="btn btn-sm btn-outline">
+            <Link href="/account/reviews" className="btn btn-sm btn-outline">
               Viết đánh giá
             </Link>
           )}
-          <Link href={`/tai-khoan/don-thue/${order.code}`} className="btn btn-sm btn-quiet">
+          <Link href={`/account/rentals/${order.code}`} className="btn btn-sm btn-quiet">
             Chi tiết
           </Link>
         </div>

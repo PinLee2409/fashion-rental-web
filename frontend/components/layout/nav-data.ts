@@ -8,12 +8,12 @@ export interface NavItem {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Mới về", href: "/danh-muc/moi-ve" },
-  { label: "Nữ", href: "/danh-muc/nu", menu: "women" },
-  { label: "Nam", href: "/danh-muc/nam", menu: "men" },
-  { label: "Đầm & Váy", href: "/danh-muc/dam-vay" },
-  { label: "Dịp", href: "/danh-muc/tat-ca", menu: "occasion" },
-  { label: "Phụ kiện", href: "/danh-muc/phu-kien", menu: "accessories" },
+  { label: "Mới về", href: "/collections/moi-ve" },
+  { label: "Nữ", href: "/collections/nu", menu: "women" },
+  { label: "Nam", href: "/collections/nam", menu: "men" },
+  { label: "Đầm & Váy", href: "/collections/dam-vay" },
+  { label: "Dịp", href: "/collections/tat-ca", menu: "occasion" },
+  { label: "Phụ kiện", href: "/collections/phu-kien", menu: "accessories" },
 ];
 
 export function categoriesOf(group: "women" | "men" | "accessories") {
@@ -22,36 +22,36 @@ export function categoriesOf(group: "women" | "men" | "accessories") {
 
 export const OCCASION_LINKS = OCCASIONS.map((o) => ({
   ...o,
-  href: `/danh-muc/tat-ca?dip=${o.slug}`,
+  href: `/collections/tat-ca?occasion=${o.slug}`,
 }));
 
 export const FOOTER_LINKS = [
   {
     title: "Mua sắm",
     links: [
-      { label: "Toàn bộ bộ sưu tập", href: "/danh-muc/tat-ca" },
-      { label: "Mới về", href: "/danh-muc/moi-ve" },
-      { label: "Đang được thuê nhiều", href: "/danh-muc/thinh-hanh" },
-      { label: "Váy cưới", href: "/danh-muc/vay-cuoi" },
-      { label: "Vest & Tuxedo", href: "/danh-muc/nam" },
+      { label: "Toàn bộ bộ sưu tập", href: "/collections/tat-ca" },
+      { label: "Mới về", href: "/collections/moi-ve" },
+      { label: "Đang được thuê nhiều", href: "/collections/thinh-hanh" },
+      { label: "Váy cưới", href: "/collections/vay-cuoi" },
+      { label: "Vest & Tuxedo", href: "/collections/nam" },
     ],
   },
   {
     title: "Hỗ trợ",
     links: [
-      { label: "Thuê đồ hoạt động thế nào", href: "/huong-dan" },
-      { label: "Chính sách thuê & hoàn cọc", href: "/chinh-sach" },
-      { label: "Câu hỏi thường gặp", href: "/huong-dan#faq" },
-      { label: "Bảng size", href: "/huong-dan#size" },
+      { label: "Thuê đồ hoạt động thế nào", href: "/how-it-works" },
+      { label: "Chính sách thuê & hoàn cọc", href: "/policies" },
+      { label: "Câu hỏi thường gặp", href: "/how-it-works#faq" },
+      { label: "Bảng size", href: "/how-it-works#size" },
     ],
   },
   {
     title: "Tài khoản",
     links: [
-      { label: "Hồ sơ & số đo", href: "/tai-khoan" },
-      { label: "Đơn thuê của tôi", href: "/tai-khoan/don-thue" },
-      { label: "Sổ địa chỉ", href: "/tai-khoan/dia-chi" },
-      { label: "Yêu thích", href: "/yeu-thich" },
+      { label: "Hồ sơ & số đo", href: "/account" },
+      { label: "Đơn thuê của tôi", href: "/account/rentals" },
+      { label: "Sổ địa chỉ", href: "/account/addresses" },
+      { label: "Yêu thích", href: "/wishlist" },
     ],
   },
 ];

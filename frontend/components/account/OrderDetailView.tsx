@@ -45,7 +45,7 @@ export function OrderDetailView({ code }: { code: string }) {
       <EmptyState
         title="Không tìm thấy đơn thuê"
         body={`Không có đơn nào mang mã ${code} trong tài khoản của bạn. Có thể đơn đã được xoá hoặc bạn mở nhầm liên kết.`}
-        action={{ label: "Về danh sách đơn thuê", href: "/tai-khoan/don-thue" }}
+        action={{ label: "Về danh sách đơn thuê", href: "/account/rentals" }}
       />
     );
   }
@@ -59,7 +59,7 @@ export function OrderDetailView({ code }: { code: string }) {
       {/* Header */}
       <Reveal as="header">
         <Link
-          href="/tai-khoan/don-thue"
+          href="/account/rentals"
           className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em] text-ink-2"
         >
           ← Tất cả đơn thuê
@@ -134,7 +134,7 @@ export function OrderDetailView({ code }: { code: string }) {
                 <ProductMedia image={item.image} ratio="3/4" className="w-20 shrink-0" />
                 <div className="min-w-0 flex-1">
                   {product ? (
-                    <Link href={`/san-pham/${product.slug}`} className="link-line link-underline-in text-[14px]">
+                    <Link href={`/products/${product.slug}`} className="link-line link-underline-in text-[14px]">
                       {item.productNameSnapshot}
                     </Link>
                   ) : (
@@ -226,7 +226,7 @@ export function OrderDetailView({ code }: { code: string }) {
               <IconPhone width={15} height={15} className="shrink-0" />
               {STORE.phone} · {STORE.hours}
             </p>
-            <Link href="/chinh-sach#tra-do" className="link-line link-underline-in inline-block">
+            <Link href="/policies#returns" className="link-line link-underline-in inline-block">
               Xem chính sách trả đồ & phí phát sinh
             </Link>
           </div>
@@ -297,12 +297,12 @@ export function OrderDetailView({ code }: { code: string }) {
       {/* Hành động */}
       <div className="flex flex-wrap gap-3 border-t border-line pt-8">
         {canPay(status) && (
-          <Link href="/thanh-toan" className="btn">
+          <Link href="/checkout" className="btn">
             Thanh toán ngay
           </Link>
         )}
         {canReview(status) && (
-          <Link href="/tai-khoan/danh-gia" className="btn btn-outline">
+          <Link href="/account/reviews" className="btn btn-outline">
             Viết đánh giá
           </Link>
         )}
@@ -311,7 +311,7 @@ export function OrderDetailView({ code }: { code: string }) {
             Huỷ đơn
           </button>
         )}
-        <Link href={`/san-pham/${order.items[0].productSlug}`} className="btn btn-quiet">
+        <Link href={`/products/${order.items[0].productSlug}`} className="btn btn-quiet">
           Thuê lại món này
         </Link>
       </div>

@@ -102,7 +102,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                 <ul className="mt-4 space-y-2.5">
                   {CATEGORIES.slice(0, 6).map((c) => (
                     <li key={c.slug}>
-                      <Link href={`/danh-muc/${c.slug}`} onClick={onClose} className="link-line link-underline-in text-[14px]">
+                      <Link href={`/collections/${c.slug}`} onClick={onClose} className="link-line link-underline-in text-[14px]">
                         {c.name}
                       </Link>
                     </li>
@@ -145,7 +145,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
               <p className="lede mx-auto mt-4 max-w-[46ch] text-[14px]">
                 Thử từ khoá ngắn hơn, hoặc duyệt theo danh mục và dịp sử dụng.
               </p>
-              <Link href="/danh-muc/tat-ca" onClick={onClose} className="btn btn-outline mt-8">
+              <Link href="/collections/tat-ca" onClick={onClose} className="btn btn-outline mt-8">
                 Xem toàn bộ bộ sưu tập
               </Link>
             </div>
@@ -156,7 +156,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                 {results.map((product) => (
                   <Link
                     key={product.slug}
-                    href={`/san-pham/${product.slug}`}
+                    href={`/products/${product.slug}`}
                     onClick={() => {
                       remember(query);
                       onClose();

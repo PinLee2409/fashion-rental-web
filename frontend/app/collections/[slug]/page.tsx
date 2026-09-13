@@ -9,14 +9,14 @@ export function generateStaticParams() {
   return COLLECTION_SLUGS.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata(props: PageProps<"/danh-muc/[slug]">): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/collections/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const collection = resolveCollection(slug);
   if (!collection) return { title: "Không tìm thấy bộ sưu tập" };
   return { title: collection.title, description: collection.description };
 }
 
-export default async function CategoryPage(props: PageProps<"/danh-muc/[slug]">) {
+export default async function CategoryPage(props: PageProps<"/collections/[slug]">) {
   const { slug } = await props.params;
   const collection = resolveCollection(slug);
   if (!collection) notFound();

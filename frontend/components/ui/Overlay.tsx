@@ -57,19 +57,17 @@ export function Drawer({
           side === "right" ? "right-0" : "left-0",
         )}
       >
-        {title && (
-          <header className="flex items-center justify-between border-b border-line px-6 py-5">
-            <div className="eyebrow">{title}</div>
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Đóng"
-              className="-mr-2 p-2 text-ink-2 transition-colors hover:text-ink"
-            >
-              <IconClose />
-            </button>
-          </header>
-        )}
+        <header className="flex items-center justify-between border-b border-line px-6 py-5">
+          <div className="eyebrow">{title}</div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Đóng"
+            className="-mr-2 p-2 text-ink-2 transition-colors hover:text-ink"
+          >
+            <IconClose />
+          </button>
+        </header>
         <div className="no-scrollbar flex-1 overflow-y-auto">{children}</div>
         {footer && <div className="border-t border-line bg-surface px-6 py-5">{footer}</div>}
       </aside>
@@ -149,11 +147,11 @@ export function Modal({
           role="dialog"
           aria-modal="true"
           className={cn(
-            "animate-scale-in max-h-[90vh] w-full overflow-y-auto bg-canvas",
+            "animate-scale-in relative max-h-[90vh] w-full overflow-y-auto bg-canvas",
             width,
           )}
         >
-          {title && (
+          {title ? (
             <header className="flex items-start justify-between gap-6 border-b border-line px-6 py-5">
               <h2 className="display-4">{title}</h2>
               <button
@@ -165,6 +163,16 @@ export function Modal({
                 <IconClose />
               </button>
             </header>
+          ) : (
+            // Không có tiêu đề thì nút đóng nổi ở góc trên bên phải
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Đóng"
+              className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center bg-surface/92 text-ink-2 transition-colors hover:text-ink"
+            >
+              <IconClose />
+            </button>
           )}
           <div className="px-6 py-6">{children}</div>
           {footer && <div className="border-t border-line px-6 py-5">{footer}</div>}

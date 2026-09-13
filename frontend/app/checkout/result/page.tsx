@@ -116,10 +116,10 @@ function ResultView() {
           </Reveal>
 
           <Reveal delay={200} className="mt-8 flex flex-wrap gap-3">
-            <Link href="/thanh-toan" className="btn">
+            <Link href="/checkout" className="btn">
               Thử thanh toán lại
             </Link>
-            <Link href="/gio-thue" className="btn btn-outline">
+            <Link href="/rental-bag" className="btn btn-outline">
               Về giỏ thuê
             </Link>
           </Reveal>
@@ -158,7 +158,7 @@ function ResultView() {
                   <li key={`${item.slug}-${i}`} className="flex gap-4 py-5">
                     <ProductMedia image={item.image} ratio="3/4" className="w-20 shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <Link href={`/san-pham/${item.slug}`} className="link-line link-underline-in text-[14px]">
+                      <Link href={`/products/${item.slug}`} className="link-line link-underline-in text-[14px]">
                         {item.name}
                       </Link>
                       <p className="mt-1.5 text-[12.5px] text-ink-2">
@@ -271,10 +271,10 @@ function ResultView() {
               </div>
 
               <div className="mt-5 space-y-3">
-                <Link href="/tai-khoan/don-thue" className="btn btn-block">
+                <Link href="/account/rentals" className="btn btn-block">
                   Xem đơn thuê của tôi
                 </Link>
-                <Link href="/danh-muc/tat-ca" className="btn btn-outline btn-block">
+                <Link href="/collections/tat-ca" className="btn btn-outline btn-block">
                   Tiếp tục khám phá
                 </Link>
               </div>
@@ -287,7 +287,7 @@ function ResultView() {
             <p className="text-[14px] text-ink-2">
               Không tìm thấy chi tiết đơn trong phiên làm việc này. Bạn có thể xem toàn bộ đơn thuê trong tài khoản.
             </p>
-            <Link href="/tai-khoan/don-thue" className="btn mt-6">
+            <Link href="/account/rentals" className="btn mt-6">
               Xem đơn thuê của tôi
             </Link>
           </Reveal>

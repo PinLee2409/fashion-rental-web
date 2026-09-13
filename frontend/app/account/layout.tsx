@@ -1,7 +1,7 @@
 import { AccountNav } from "@/components/account/AccountNav";
 import { CUSTOMER } from "@/data/customer";
 
-export default function AccountLayout({ children }: LayoutProps<"/tai-khoan">) {
+export default function AccountLayout({ children }: LayoutProps<"/account">) {
   return (
     <div className="pt-[76px]">
       <header className="shell border-b border-line py-12">

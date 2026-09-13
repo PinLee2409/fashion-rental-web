@@ -73,7 +73,7 @@ export default function OrdersPage() {
         <EmptyState
           title={EMPTY_COPY[tab].title}
           body={EMPTY_COPY[tab].body}
-          action={{ label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" }}
+          action={{ label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" }}
         />
       ) : (
         <div className="space-y-4">

@@ -118,7 +118,7 @@ export function Header() {
               <IconSearch />
             </button>
             <Link
-              href="/yeu-thich"
+              href="/wishlist"
               aria-label="Yêu thích"
               className={cn("relative p-2.5 transition-colors", solid ? "text-ink hover:text-accent" : "text-canvas")}
             >
@@ -126,7 +126,7 @@ export function Header() {
               {mounted && wishlist.count > 0 && <Badge count={wishlist.count} solid={solid} />}
             </Link>
             <Link
-              href="/tai-khoan"
+              href="/account"
               aria-label="Tài khoản"
               className={cn(
                 "hidden p-2.5 transition-colors sm:block",
@@ -198,7 +198,7 @@ function CategoryMenu({ group, featured }: { group: "women" | "men" | "accessori
         <ul className="mt-5 space-y-3">
           {categories.map((c) => (
             <li key={c.slug}>
-              <Link href={`/danh-muc/${c.slug}`} className="link-line link-underline-in text-[14px]">
+              <Link href={`/collections/${c.slug}`} className="link-line link-underline-in text-[14px]">
                 {c.name}
               </Link>
             </li>
@@ -217,14 +217,14 @@ function CategoryMenu({ group, featured }: { group: "women" | "men" | "accessori
             </li>
           ))}
         </ul>
-        <Link href="/danh-muc/tat-ca" className="link-line link-underline-in mt-8 inline-block text-[11px] uppercase tracking-[0.14em] text-ink-2">
+        <Link href="/collections/tat-ca" className="link-line link-underline-in mt-8 inline-block text-[11px] uppercase tracking-[0.14em] text-ink-2">
           Xem tất cả
         </Link>
       </div>
 
       {product && (
         <div className="col-span-5">
-          <Link href={`/san-pham/${product.slug}`} className="group grid grid-cols-2 gap-5">
+          <Link href={`/products/${product.slug}`} className="group grid grid-cols-2 gap-5">
             <ProductMedia image={product.images[0]} ratio="4/5" />
             <div className="flex flex-col justify-end pb-2">
               <p className="eyebrow text-ink-3">Được chọn nhiều</p>
@@ -255,7 +255,7 @@ function OccasionMenu() {
         </ul>
       </div>
       <div className="col-span-5">
-        <Link href="/danh-muc/vay-cuoi" className="group block">
+        <Link href="/collections/vay-cuoi" className="group block">
           <ProductMedia
             image={{
               id: "menu-occasion",

@@ -72,7 +72,7 @@ export default function MyReviewsPage() {
               <Reveal as="li" key={`${item.orderCode}-${item.productSlug}`} delay={i * 60} className="flex gap-4 py-5">
                 <ProductMedia image={item.image} ratio="3/4" className="w-20 shrink-0" />
                 <div className="min-w-0 flex-1">
-                  <Link href={`/san-pham/${item.productSlug}`} className="link-line link-underline-in text-[14px]">
+                  <Link href={`/products/${item.productSlug}`} className="link-line link-underline-in text-[14px]">
                     {item.productName}
                   </Link>
                   <p className="mt-1.5 text-[12.5px] text-ink-2">
@@ -108,7 +108,7 @@ export default function MyReviewsPage() {
           <EmptyState
             title="Bạn chưa có đánh giá nào"
             body="Sau khi trả đồ, hãy chia sẻ cảm nhận để khách sau chọn size dễ hơn."
-            action={{ label: "Xem đơn đã hoàn tất", href: "/tai-khoan/don-thue" }}
+            action={{ label: "Xem đơn đã hoàn tất", href: "/account/rentals" }}
           />
         ) : (
           <ul className="divide-y divide-line border-y border-line">
@@ -119,7 +119,7 @@ export default function MyReviewsPage() {
                   <span className="text-[12px] text-ink-3">{formatDate(review.createdAt.slice(0, 10))}</span>
                 </div>
                 <Link
-                  href={`/san-pham/${review.productSlug}`}
+                  href={`/products/${review.productSlug}`}
                   className="link-line link-underline-in mt-2.5 inline-block text-[14px]"
                 >
                   {review.productSlug.replace(/-/g, " ")}

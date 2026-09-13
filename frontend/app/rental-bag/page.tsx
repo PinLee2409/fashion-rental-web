@@ -55,7 +55,7 @@ export default function CartPage() {
           icon={<IconBag width={30} height={30} />}
           title="Giỏ thuê đang trống"
           body="Chọn khoảng ngày bạn cần, hệ thống sẽ chỉ hiện những món còn rảnh đúng ngày đó. Mỗi món thêm vào giỏ được giữ chỗ riêng trong 15 phút."
-          action={{ label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" }}
+          action={{ label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" }}
         />
       </div>
     );
@@ -100,7 +100,7 @@ export default function CartPage() {
               const availability = availabilityByLine[line.id];
               return (
                 <Reveal as="li" key={line.id} delay={i * 60} className="flex gap-5 py-7">
-                  <Link href={`/san-pham/${product.slug}`} className="w-24 shrink-0 sm:w-32">
+                  <Link href={`/products/${product.slug}`} className="w-24 shrink-0 sm:w-32">
                     <ProductMedia image={product.images[0]} ratio="3/4" />
                   </Link>
 
@@ -109,7 +109,7 @@ export default function CartPage() {
                       <div className="min-w-0">
                         <p className="eyebrow text-ink-3">{product.brandLine}</p>
                         <h2 className="mt-1.5 text-[15px]">
-                          <Link href={`/san-pham/${product.slug}`} className="link-line link-underline-in">
+                          <Link href={`/products/${product.slug}`} className="link-line link-underline-in">
                             {product.name}
                           </Link>
                         </h2>
@@ -186,7 +186,7 @@ export default function CartPage() {
           </ul>
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <Link href="/danh-muc/tat-ca" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
+            <Link href="/collections/tat-ca" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
               Thuê thêm món khác
             </Link>
             <button
@@ -244,7 +244,7 @@ export default function CartPage() {
               <PriceBreakdown quote={cart.quote} showDueSplit={false} />
             </div>
 
-            <Link href="/thanh-toan" className="btn btn-block mt-6">
+            <Link href="/checkout" className="btn btn-block mt-6">
               Tiến hành thuê
             </Link>
 
@@ -311,7 +311,7 @@ export default function CartPage() {
         title="Giỏ thuê đã hết hạn giữ chỗ"
         footer={
           <div className="flex gap-3">
-            <Link href="/danh-muc/tat-ca" className="btn btn-quiet flex-1">
+            <Link href="/collections/tat-ca" className="btn btn-quiet flex-1">
               Xem món khác
             </Link>
             <button

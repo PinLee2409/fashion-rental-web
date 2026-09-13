@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils";
 import { useWishlist } from "@/store/wishlist";
 
 const LINKS = [
-  { href: "/tai-khoan", label: "Tổng quan" },
-  { href: "/tai-khoan/don-thue", label: "Đơn thuê" },
-  { href: "/tai-khoan/dia-chi", label: "Sổ địa chỉ" },
-  { href: "/tai-khoan/danh-gia", label: "Đánh giá" },
-  { href: "/tai-khoan/thong-bao", label: "Thông báo" },
-  { href: "/yeu-thich", label: "Yêu thích" },
+  { href: "/account", label: "Tổng quan" },
+  { href: "/account/rentals", label: "Đơn thuê" },
+  { href: "/account/addresses", label: "Sổ địa chỉ" },
+  { href: "/account/reviews", label: "Đánh giá" },
+  { href: "/account/notifications", label: "Thông báo" },
+  { href: "/wishlist", label: "Yêu thích" },
 ];
 
 export function AccountNav() {
@@ -24,16 +24,16 @@ export function AccountNav() {
   const wishlist = useWishlist();
 
   const counts: Record<string, number> = {
-    "/tai-khoan/don-thue": ORDERS.filter((o) => isActiveRental(o.status) || o.status === "pending_payment").length,
-    "/tai-khoan/thong-bao": NOTIFICATIONS.filter((n) => !n.read).length,
-    "/yeu-thich": mounted ? wishlist.count : 0,
+    "/account/rentals": ORDERS.filter((o) => isActiveRental(o.status) || o.status === "pending_payment").length,
+    "/account/notifications": NOTIFICATIONS.filter((n) => !n.read).length,
+    "/wishlist": mounted ? wishlist.count : 0,
   };
 
   return (
     <nav className="min-w-0 lg:sticky lg:top-[100px] lg:self-start">
       <ul className="no-scrollbar flex gap-1 overflow-x-auto border-b border-line pb-1 lg:block lg:space-y-1 lg:border-b-0 lg:pb-0">
         {LINKS.map((link) => {
-          const active = link.href === "/tai-khoan" ? pathname === link.href : pathname.startsWith(link.href);
+          const active = link.href === "/account" ? pathname === link.href : pathname.startsWith(link.href);
           return (
             <li key={link.href} className="shrink-0">
               <Link
@@ -61,7 +61,7 @@ export function AccountNav() {
       </ul>
 
       <Link
-        href="/dang-nhap"
+        href="/login"
         className="mt-6 hidden text-[11.5px] uppercase tracking-[0.14em] text-ink-3 transition-colors hover:text-ink lg:block"
       >
         Đăng xuất

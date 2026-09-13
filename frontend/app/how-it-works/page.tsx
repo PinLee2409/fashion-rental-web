@@ -92,7 +92,7 @@ export default function GuidePage() {
             <p className="lede mt-5 text-[14px]">
               Không tìm thấy câu trả lời? Gọi {STORE.phone} trong giờ mở cửa {STORE.hours}.
             </p>
-            <Link href="/chinh-sach" className="btn btn-outline mt-7">
+            <Link href="/policies" className="btn btn-outline mt-7">
               Xem chính sách đầy đủ
             </Link>
           </Reveal>
@@ -113,7 +113,7 @@ export default function GuidePage() {
             Chọn ngày trước, hệ thống sẽ chỉ hiện những món thật sự còn rảnh — đặt trước tối đa{" "}
             {SETTINGS.max_advance_days} ngày.
           </p>
-          <Link href="/danh-muc/tat-ca" className="btn mt-8">
+          <Link href="/collections/tat-ca" className="btn mt-8">
             Khám phá bộ sưu tập
           </Link>
         </Reveal>

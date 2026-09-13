@@ -30,7 +30,7 @@ export default function RegisterPage() {
         title: "Tạo tài khoản thành công",
         body: "Bổ sung số đo trong hồ sơ để shop chọn đồ vừa người hơn.",
       });
-      router.push("/tai-khoan");
+      router.push("/account");
     }, 700);
   }
 
@@ -44,7 +44,7 @@ export default function RegisterPage() {
       footer={
         <>
           Đã có tài khoản?{" "}
-          <Link href="/dang-nhap" className="link-line link-underline-in text-ink">
+          <Link href="/login" className="link-line link-underline-in text-ink">
             Đăng nhập
           </Link>
         </>
@@ -114,7 +114,7 @@ export default function RegisterPage() {
           />
           <span>
             Tôi đồng ý với{" "}
-            <Link href="/chinh-sach" className="link-line link-underline-in">
+            <Link href="/policies" className="link-line link-underline-in">
               điều khoản thuê đồ
             </Link>{" "}
             và chính sách hoàn cọc của StyleRent.

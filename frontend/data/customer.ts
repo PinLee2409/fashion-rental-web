@@ -69,7 +69,7 @@ export const NOTIFICATIONS: AppNotification[] = [
     body: "Đơn của bạn có hạn trả sau 2 ngày. Trả đúng hạn để được hoàn đủ tiền cọc.",
     createdAt: new Date(Date.now() - 3 * 3600_000).toISOString(),
     read: false,
-    href: "/tai-khoan/don-thue",
+    href: "/account/rentals",
   },
   {
     id: "n-2",
@@ -78,7 +78,7 @@ export const NOTIFICATIONS: AppNotification[] = [
     body: "Shop đã soạn xong đơn giao tận nơi, shipper sẽ lấy hàng vào sáng mai.",
     createdAt: new Date(Date.now() - 26 * 3600_000).toISOString(),
     read: false,
-    href: "/tai-khoan/don-thue",
+    href: "/account/rentals",
   },
   {
     id: "n-3",
@@ -87,7 +87,7 @@ export const NOTIFICATIONS: AppNotification[] = [
     body: "Một đơn thuê đang giữ chỗ và sẽ tự huỷ sau 30 phút nếu chưa thanh toán.",
     createdAt: new Date(Date.now() - 40 * 60_000).toISOString(),
     read: false,
-    href: "/tai-khoan/don-thue",
+    href: "/account/rentals",
   },
   {
     id: "n-4",
@@ -104,7 +104,7 @@ export const NOTIFICATIONS: AppNotification[] = [
     body: "Bạn có 1 món vừa hoàn tất. Chia sẻ cảm nhận trong 30 ngày để nhận ưu đãi.",
     createdAt: new Date(Date.now() - 7 * 86400_000).toISOString(),
     read: true,
-    href: "/tai-khoan/danh-gia",
+    href: "/account/reviews",
   },
   {
     id: "n-6",

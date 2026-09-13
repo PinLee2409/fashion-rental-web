@@ -62,7 +62,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                             ))
                           : categoriesOf(item.menu as "women" | "men" | "accessories").map((c) => (
                               <li key={c.slug} className="py-2">
-                                <Link href={`/danh-muc/${c.slug}`} onClick={onClose} className="text-[14.5px] text-ink-2">
+                                <Link href={`/collections/${c.slug}`} onClick={onClose} className="text-[14.5px] text-ink-2">
                                   {c.name}
                                 </Link>
                               </li>
@@ -87,11 +87,11 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
 
         <ul className="mt-8 space-y-3.5 text-[14px]">
           {[
-            { label: "Tài khoản của tôi", href: "/tai-khoan" },
-            { label: "Đơn thuê", href: "/tai-khoan/don-thue" },
-            { label: "Yêu thích", href: "/yeu-thich" },
-            { label: "Thuê đồ hoạt động thế nào", href: "/huong-dan" },
-            { label: "Chính sách thuê & hoàn cọc", href: "/chinh-sach" },
+            { label: "Tài khoản của tôi", href: "/account" },
+            { label: "Đơn thuê", href: "/account/rentals" },
+            { label: "Yêu thích", href: "/wishlist" },
+            { label: "Thuê đồ hoạt động thế nào", href: "/how-it-works" },
+            { label: "Chính sách thuê & hoàn cọc", href: "/policies" },
           ].map((link, i) => (
             <li key={link.href} className="animate-fade-up" style={{ animationDelay: `${420 + i * 45}ms` }}>
               <Link href={link.href} onClick={onClose} className="text-ink-2">

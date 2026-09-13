@@ -107,7 +107,7 @@ export function ProductDetail({ product }: { product: Product }) {
       tone: "success",
       title: "Đã thêm vào giỏ thuê",
       body: `${product.name} · ${size} · ${color} — giữ chỗ ${SETTINGS.hold_ttl_minutes} phút`,
-      action: { label: "Xem giỏ thuê", href: "/gio-thue" },
+      action: { label: "Xem giỏ thuê", href: "/rental-bag" },
     });
     then?.();
   }
@@ -246,7 +246,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <button
             type="button"
             disabled={!canRent}
-            onClick={() => addToCart(() => router.push("/thanh-toan"))}
+            onClick={() => addToCart(() => router.push("/checkout"))}
             className="btn btn-outline flex-1"
           >
             Thuê ngay
@@ -282,7 +282,7 @@ export function ProductDetail({ product }: { product: Product }) {
           Trang chủ
         </Link>
         <span className="mx-2 text-ink-3">/</span>
-        <Link href={`/danh-muc/${product.categorySlug}`} className="link-line link-underline-in">
+        <Link href={`/collections/${product.categorySlug}`} className="link-line link-underline-in">
           {category?.name}
         </Link>
         <span className="mx-2 text-ink-3">/</span>
@@ -448,7 +448,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <Reveal as="header" className="flex items-end justify-between pb-10">
             <h2 className="display-3">Có thể bạn cũng thích</h2>
             <Link
-              href={`/danh-muc/${product.categorySlug}`}
+              href={`/collections/${product.categorySlug}`}
               className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]"
             >
               Xem danh mục

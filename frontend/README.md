@@ -63,24 +63,26 @@ Giai đoạn này chưa có ảnh chụp thật. `components/product/ProductMedi
 
 ## 2. Sitemap (đúng route trong §8.1 của đặc tả)
 
+Thư mục route đặt bằng tiếng Anh; slug dữ liệu (danh mục, sản phẩm) giữ tiếng Việt không dấu vì đó là nội dung, ví dụ `/collections/ao-dai`.
+
 ```
-/                                   S01  Trang chủ
-/danh-muc/[slug]                    S02  Danh sách sản phẩm + bộ lọc + chọn ngày
-     tat-ca · moi-ve · thinh-hanh · nu · nam · phu-kien · dam-vay · <slug danh mục>
-     ?dip=<occasion>                     lọc theo dịp sử dụng
-/san-pham/[slug]                    S03  Chi tiết sản phẩm  ⭐ màn hình lõi
-/gio-thue                           S04  Giỏ thuê
-/thanh-toan                         S05  Checkout 3 bước
-/thanh-toan/ket-qua                 S06  Kết quả thanh toán (thành công / thất bại)
-/tai-khoan                          S07  Tổng quan + hồ sơ + số đo
-/tai-khoan/don-thue                 S08  Danh sách đơn theo tab trạng thái
-/tai-khoan/don-thue/[code]          S09  Chi tiết đơn, quyết toán, huỷ, gia hạn
-/tai-khoan/dia-chi                  S10  Sổ địa chỉ
-/tai-khoan/danh-gia                      Đánh giá (chờ viết + đã viết)
-/tai-khoan/thong-bao                     Thông báo
-/dang-nhap · /dang-ky               S11  Xác thực
-/huong-dan · /chinh-sach            S12  Hướng dẫn thuê, FAQ, bảng size, chính sách
-/yeu-thich                               Danh sách yêu thích (xem mục 6)
+/                                S01  Trang chủ
+/collections/[slug]              S02  Danh sách sản phẩm + bộ lọc + chọn ngày
+      tat-ca · moi-ve · thinh-hanh · nu · nam · phu-kien · dam-vay · <slug danh mục>
+      ?occasion=<slug>                Lọc theo dịp sử dụng
+/products/[slug]                 S03  Chi tiết sản phẩm  ⭐ màn hình lõi
+/rental-bag                      S04  Giỏ thuê
+/checkout                        S05  Checkout 3 bước
+/checkout/result                 S06  Kết quả thanh toán (thành công / thất bại)
+/account                         S07  Tổng quan + hồ sơ + số đo
+/account/rentals                 S08  Danh sách đơn theo tab trạng thái
+/account/rentals/[code]          S09  Chi tiết đơn, quyết toán, huỷ, gia hạn
+/account/addresses               S10  Sổ địa chỉ
+/account/reviews                      Đánh giá (chờ viết + đã viết)
+/account/notifications                Thông báo
+/wishlist                        S13  Danh sách yêu thích
+/login · /register               S11  Xác thực
+/how-it-works · /policies        S12  Hướng dẫn thuê, FAQ, bảng size, chính sách
 ```
 
 ---
@@ -104,7 +106,8 @@ Toàn bộ quy tắc nằm ở `lib/`, tách khỏi component để đối chi�
 | BR-30/31/32 Phí trễ, phí tình trạng, quyết toán cọc | `lib/policy.ts`, `SettlementTable` | Đơn hoàn tất hiện bảng "cọc − phí = hoàn lại" |
 | BR-40/41/42 Gia hạn | `lib/policy.ts` | Hộp thoại gia hạn: kiểm tra booking kế tiếp, tính phí ngày thêm |
 | BR-50/51 Khuyến mãi | `lib/pricing.ts` | Ô nhập mã, báo lỗi khi chưa đạt đơn tối thiểu |
-| BR-60/61 Đánh giá | `app/tai-khoan/danh-gia` | Chỉ đơn `completed`, trong 30 ngày, mỗi món một lần, có kiểm duyệt |
+| BR-60/61 Đánh giá | `app/account/reviews` | Chỉ đơn `completed`, trong 30 ngày, mỗi món một lần, có kiểm duyệt |
+| BR-63…66 Yêu thích | `store/wishlist.tsx` | Nút trái tim ở thẻ sản phẩm và PDP, trang `/wishlist`, không giữ chỗ |
 | §4.1 State machine đơn | `lib/order-status.ts` | Nhãn tiếng Việt cho khách + timeline 6 bước, không lộ enum |
 | PHỤ LỤC A | `lib/settings.ts` | Mọi con số (TTL, buffer, hệ số phí trễ…) đọc từ một chỗ |
 
@@ -145,7 +148,7 @@ Component dùng chung đúng theo §8.3 của đặc tả: `<RentalDatePicker>`,
 
 ## 6. Ghi chú & giả định
 
-1. **Yêu thích** là tính năng chỉ có ở frontend, lưu trong `localStorage`. Đặc tả chưa có bảng/API cho wishlist — khi backend bổ sung, chỉ cần thay phần lưu trữ trong `store/wishlist.tsx`.
+1. **Yêu thích** đã được bổ sung vào đặc tả (BR-63→BR-66, bảng `wishlists`, API `/me/wishlist`, màn hình S13). Bản frontend hiện lưu trong `localStorage` đúng theo BR-64 (khách vãng lai lưu tạm ở trình duyệt); khi có API, chỉ cần thay phần lưu trữ trong `store/wishlist.tsx` và gọi `/me/wishlist/merge` sau khi đăng nhập.
 2. **Giảm 2% khi trả đủ** (BR-13) được tính trên tiền thuê sau khuyến mãi; đặc tả không nói rõ gốc tính nên chọn phương án không đụng vào tiền cọc (cọc là khoản hoàn lại).
 3. **Bảng gói thuê** sinh từ giá ngày: gói 3 ngày ≈ 2,57× và gói 7 ngày ≈ 4,15× giá ngày, ngày thuê thêm ≈ 0,43× — đặt sao cho mọi gói đều thật sự rẻ hơn khi tính theo ngày, đúng tinh thần "luôn chọn tổ hợp rẻ nhất cho khách".
 4. **Thanh toán** được mô phỏng: bước cuối có công tắc *demo* để xem màn hình thất bại. Thực tế chỉ IPN mới được đổi trạng thái đơn (§7.2).

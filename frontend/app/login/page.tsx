@@ -26,7 +26,7 @@ export default function LoginPage() {
     setLoading(true);
     setTimeout(() => {
       toast.push({ tone: "success", title: `Chào mừng trở lại, ${CUSTOMER.name.split(" ").slice(-1)[0]}` });
-      router.push("/tai-khoan");
+      router.push("/account");
     }, 700);
   }
 
@@ -39,7 +39,7 @@ export default function LoginPage() {
       footer={
         <>
           Chưa có tài khoản?{" "}
-          <Link href="/dang-ky" className="link-line link-underline-in text-ink">
+          <Link href="/register" className="link-line link-underline-in text-ink">
             Tạo tài khoản
           </Link>
         </>
@@ -87,7 +87,7 @@ export default function LoginPage() {
             />
             Ghi nhớ đăng nhập
           </label>
-          <Link href="/dang-nhap" className="link-line link-underline-in text-[12.5px] text-ink-2">
+          <Link href="/login" className="link-line link-underline-in text-[12.5px] text-ink-2">
             Quên mật khẩu?
           </Link>
         </div>

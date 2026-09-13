@@ -57,9 +57,9 @@ export function CatalogView({ collection }: { collection: Collection }) {
   const [dateOpen, setDateOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Dịp lấy từ query `?dip=` — giữ nguyên cách lọc của API /products?occasion=
+  // Dịp lấy từ query `?occasion=` — giữ nguyên cách lọc của API /products?occasion=
   useEffect(() => {
-    const dip = searchParams.get("dip");
+    const dip = searchParams.get("occasion");
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOccasions(dip ? [dip] : []);
   }, [searchParams]);
@@ -205,7 +205,7 @@ export function CatalogView({ collection }: { collection: Collection }) {
             {collection.relatedCategories.map((c) => (
               <Link
                 key={c.slug}
-                href={`/danh-muc/${c.slug}`}
+                href={`/collections/${c.slug}`}
                 className="shrink-0 border border-line px-4 py-2 text-[12.5px] transition-colors hover:border-ink"
               >
                 {c.name}

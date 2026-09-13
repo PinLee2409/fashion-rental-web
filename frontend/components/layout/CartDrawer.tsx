@@ -34,11 +34,11 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
               <span className="text-[14px]">Tạm tính</span>
               <span className="text-[16px] tabular-nums">{formatVnd(cart.quote.grandTotal)}</span>
             </div>
-            <Link href="/gio-thue" onClick={onClose} className="btn btn-block">
+            <Link href="/rental-bag" onClick={onClose} className="btn btn-block">
               Xem giỏ thuê
             </Link>
             <Link
-              href="/thanh-toan"
+              href="/checkout"
               onClick={onClose}
               className="link-line link-underline-in block text-center text-[11px] uppercase tracking-[0.14em] text-ink-2"
             >
@@ -53,13 +53,13 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
           icon={<IconBag width={28} height={28} />}
           title="Giỏ thuê đang trống"
           body="Chọn ngày, chọn size rồi thêm món bạn thích. Mỗi món được giữ chỗ riêng cho bạn trong 15 phút."
-          action={{ label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" }}
+          action={{ label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" }}
         />
       ) : (
         <ul className="divide-y divide-line">
           {cart.detailed.map(({ line, product, variant, days, rentalTotal, depositTotal, expired }) => (
             <li key={line.id} className="flex gap-4 px-6 py-5">
-              <Link href={`/san-pham/${product.slug}`} onClick={onClose} className="w-20 shrink-0">
+              <Link href={`/products/${product.slug}`} onClick={onClose} className="w-20 shrink-0">
                 <ProductMedia image={product.images[0]} ratio="3/4" />
               </Link>
               <div className="min-w-0 flex-1">

@@ -28,13 +28,13 @@ export default function HomePage() {
         <SectionHead
           eyebrow="Tủ đồ"
           title="Thuê theo danh mục"
-          link={{ label: "Toàn bộ bộ sưu tập", href: "/danh-muc/tat-ca" }}
+          link={{ label: "Toàn bộ bộ sưu tập", href: "/collections/tat-ca" }}
         />
         <CategoryStrip />
       </section>
 
       <section className="shell py-20 md:py-28">
-        <SectionHead eyebrow="Vừa nhập tủ" title="Mới về" link={{ label: "Xem tất cả", href: "/danh-muc/moi-ve" }} />
+        <SectionHead eyebrow="Vừa nhập tủ" title="Mới về" link={{ label: "Xem tất cả", href: "/collections/moi-ve" }} />
         <ProductRail products={newArrivals} />
       </section>
 
@@ -43,7 +43,7 @@ export default function HomePage() {
           <SectionHead
             eyebrow="Khách quay lại nhiều nhất"
             title="Đang được thuê nhiều"
-            link={{ label: "Xem bảng xếp hạng", href: "/danh-muc/thinh-hanh" }}
+            link={{ label: "Xem bảng xếp hạng", href: "/collections/thinh-hanh" }}
           />
           <ProductRail products={trending} />
         </div>
@@ -62,7 +62,7 @@ export default function HomePage() {
         <SectionHead
           eyebrow="Bốn bước"
           title="Thuê đồ hoạt động thế nào"
-          link={{ label: "Hướng dẫn chi tiết", href: "/huong-dan" }}
+          link={{ label: "Hướng dẫn chi tiết", href: "/how-it-works" }}
         />
         <HowItWorks />
       </section>

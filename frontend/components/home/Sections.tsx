@@ -91,7 +91,7 @@ export function CategoryStrip() {
         if (!category || !product) return null;
         return (
           <Reveal key={pick.slug} as="div" delay={i * 70} className={cn("group", pick.span)}>
-            <Link href={`/danh-muc/${category.slug}`} className="block">
+            <Link href={`/collections/${category.slug}`} className="block">
               <ProductMedia image={product.images[i % product.images.length]} ratio={i < 2 ? "4/5" : "3/4"} />
               <div className="flex items-baseline justify-between gap-4 pt-4">
                 <h3 className="display-4">{category.name}</h3>
@@ -202,7 +202,7 @@ export function ReviewWall() {
             <figcaption className="mt-6 border-t border-line pt-4">
               <p className="text-[13px]">{review.author}</p>
               {product && (
-                <Link href={`/san-pham/${product.slug}`} className="link-line link-underline-in mt-1 block text-[12px] text-ink-2">
+                <Link href={`/products/${product.slug}`} className="link-line link-underline-in mt-1 block text-[12px] text-ink-2">
                   {product.name} · size {review.sizeWorn}
                 </Link>
               )}
@@ -224,7 +224,7 @@ export function Lookbook() {
         if (!product) return null;
         return (
           <Reveal key={item.handle + i} as="div" delay={i * 60} className="w-[46vw] shrink-0 snap-start sm:w-[30vw] lg:w-auto">
-            <Link href={`/san-pham/${product.slug}`} className="group block">
+            <Link href={`/products/${product.slug}`} className="group block">
               <ProductMedia image={product.images[(i + 2) % product.images.length]} ratio="1/1" />
               <p className="mt-3 text-[12px]">{item.handle}</p>
               <p className="text-[11.5px] text-ink-3">{item.caption}</p>

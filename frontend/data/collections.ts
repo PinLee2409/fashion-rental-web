@@ -19,7 +19,7 @@ const GROUP_LABEL = {
 } as const;
 
 /**
- * Bộ sưu tập hiển thị ở route `/danh-muc/[slug]`.
+ * Bộ sưu tập hiển thị ở route `/collections/[slug]`.
  * Ngoài slug danh mục thật, có thêm vài slug tổng hợp cho điều hướng:
  * tat-ca · moi-ve · thinh-hanh · nu · nam · phu-kien · dam-vay.
  */

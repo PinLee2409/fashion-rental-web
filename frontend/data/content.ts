@@ -4,8 +4,8 @@ export const HERO = {
   eyebrow: "Cho thuê trang phục cao cấp · TP. Hồ Chí Minh",
   headline: ["WEAR MORE.", "OWN LESS."],
   body: "Thuê trang phục cao cấp cho từng khoảnh khắc, không cần chất đầy tủ đồ. Chọn ngày, kiểm tra lịch trống, nhận đồ đã giặt ủi chỉn chu.",
-  primaryCta: { label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" },
-  secondaryCta: { label: "Thuê đồ hoạt động thế nào", href: "/huong-dan" },
+  primaryCta: { label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" },
+  secondaryCta: { label: "Thuê đồ hoạt động thế nào", href: "/how-it-works" },
   stats: [
     { value: "1.200+", label: "Lượt thuê đã hoàn tất" },
     { value: "4,7/5", label: "Điểm hài lòng trung bình" },
@@ -127,7 +127,7 @@ export const FAQ = [
 
 export const POLICY_SECTIONS = [
   {
-    id: "dat-thue",
+    id: "booking",
     title: "Đặt thuê & giữ chỗ",
     items: [
       `Chỉ nhận đặt trong khoảng từ hôm nay đến ${SETTINGS.max_advance_days} ngày tới.`,
@@ -137,7 +137,7 @@ export const POLICY_SECTIONS = [
     ],
   },
   {
-    id: "thanh-toan",
+    id: "payment",
     title: "Thanh toán & tiền cọc",
     items: [
       "Tiền cọc tách riêng khỏi tiền thuê và được hoàn lại sau khi kiểm tra đồ.",
@@ -148,7 +148,7 @@ export const POLICY_SECTIONS = [
     ],
   },
   {
-    id: "huy-don",
+    id: "cancellation",
     title: "Huỷ đơn & hoàn tiền",
     items: [
       "Huỷ trước ngày nhận từ 7 ngày: hoàn 100% tiền thuê đã trả.",
@@ -160,12 +160,12 @@ export const POLICY_SECTIONS = [
     ],
   },
   {
-    id: "tra-do",
+    id: "returns",
     title: "Trả đồ & phí phát sinh",
     items: CONDITION_FEES.map((f) => `${f.condition}: ${f.fee}.`),
   },
   {
-    id: "gia-han",
+    id: "extension",
     title: "Gia hạn",
     items: [
       "Gửi yêu cầu gia hạn trước hạn trả ít nhất 12 giờ.",
@@ -174,7 +174,7 @@ export const POLICY_SECTIONS = [
     ],
   },
   {
-    id: "danh-gia",
+    id: "reviews",
     title: "Đánh giá",
     items: [
       "Chỉ đơn đã hoàn tất mới được đánh giá, mỗi sản phẩm một lần trong vòng 30 ngày.",

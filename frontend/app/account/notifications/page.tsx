@@ -44,7 +44,7 @@ export default function NotificationsPage() {
         <EmptyState
           title="Chưa có thông báo"
           body="Nhắc hạn trả, xác nhận đơn và tin hoàn cọc sẽ xuất hiện ở đây."
-          action={{ label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" }}
+          action={{ label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" }}
         />
       ) : (
         <ul className="divide-y divide-line border-y border-line">

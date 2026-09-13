@@ -36,7 +36,7 @@ export default function WishlistPage() {
             icon={<IconHeart width={30} height={30} />}
             title="Danh sách yêu thích đang trống"
             body="Lưu lại những thiết kế bạn thích, quay lại khi tới dịp cần dùng."
-            action={{ label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" }}
+            action={{ label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" }}
           />
         ) : (
           <>

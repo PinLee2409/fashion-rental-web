@@ -73,7 +73,7 @@ export default function CheckoutPage() {
         <EmptyState
           title="Chưa có gì để thanh toán"
           body="Giỏ thuê của bạn đang trống. Chọn ngày và thêm vài món trước khi đặt thuê."
-          action={{ label: "Khám phá bộ sưu tập", href: "/danh-muc/tat-ca" }}
+          action={{ label: "Khám phá bộ sưu tập", href: "/collections/tat-ca" }}
         />
       </div>
     );
@@ -151,10 +151,10 @@ export default function CheckoutPage() {
     // Mô phỏng chuyển sang cổng thanh toán rồi quay về theo kết quả IPN
     setTimeout(() => {
       if (simulateFailure) {
-        router.push(`/thanh-toan/ket-qua?code=${code}&trang-thai=that-bai`);
+        router.push(`/checkout/result?code=${code}&trang-thai=that-bai`);
       } else {
         cart.clear();
-        router.push(`/thanh-toan/ket-qua?code=${code}&trang-thai=thanh-cong`);
+        router.push(`/checkout/result?code=${code}&trang-thai=thanh-cong`);
       }
     }, 900);
   }
@@ -164,7 +164,7 @@ export default function CheckoutPage() {
       <div className="shell border-b border-line py-10">
         <Reveal className="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <Link href="/gio-thue" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em] text-ink-2">
+            <Link href="/rental-bag" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em] text-ink-2">
               ← Quay lại giỏ thuê
             </Link>
             <h1 className="display-2 mt-4">Đặt thuê</h1>
@@ -283,7 +283,7 @@ export default function CheckoutPage() {
                     ))}
                   </div>
                   <Link
-                    href="/tai-khoan/dia-chi"
+                    href="/account/addresses"
                     className="link-line link-underline-in mt-3 inline-block text-[11.5px] uppercase tracking-[0.12em] text-ink-2"
                   >
                     Quản lý sổ địa chỉ
@@ -458,7 +458,7 @@ export default function CheckoutPage() {
                   />
                   <span>
                     Tôi đã đọc và đồng ý với{" "}
-                    <Link href="/chinh-sach" className="link-line link-underline-in">
+                    <Link href="/policies" className="link-line link-underline-in">
                       điều khoản thuê đồ
                     </Link>
                     : giữ gìn trang phục, trả đúng hạn, và chấp nhận phí phát sinh nếu đồ hư hỏng hoặc trả trễ.
@@ -488,7 +488,7 @@ export default function CheckoutPage() {
                 Quay lại
               </button>
             ) : (
-              <Link href="/gio-thue" className="btn btn-quiet">
+              <Link href="/rental-bag" className="btn btn-quiet">
                 Về giỏ thuê
               </Link>
             )}
