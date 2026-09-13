@@ -22,7 +22,7 @@ import {
   IconWrench,
 } from "@/components/ui/Icons";
 import { badgeCounts } from "@/lib/ops";
-import { cn } from "@/lib/utils";
+import { cn, routeOf } from "@/lib/utils";
 import { useSession } from "@/store/session";
 import { NAV, type NavItem } from "./nav";
 
@@ -53,7 +53,7 @@ export function Sidebar({
   mobileOpen: boolean;
   onCloseMobile: () => void;
 }) {
-  const pathname = usePathname();
+  const pathname = routeOf(usePathname());
   const session = useSession();
   const badges = badgeCounts();
 

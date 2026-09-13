@@ -6,7 +6,7 @@ import { NOTIFICATIONS } from "@/data/customer";
 import { ORDERS } from "@/data/orders";
 import { useMounted } from "@/hooks";
 import { isActiveRental } from "@/lib/order-status";
-import { cn } from "@/lib/utils";
+import { cn, routeOf } from "@/lib/utils";
 import { useWishlist } from "@/store/wishlist";
 
 const LINKS = [
@@ -19,7 +19,7 @@ const LINKS = [
 ];
 
 export function AccountNav() {
-  const pathname = usePathname();
+  const pathname = routeOf(usePathname());
   const mounted = useMounted();
   const wishlist = useWishlist();
 

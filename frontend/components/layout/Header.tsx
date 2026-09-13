@@ -7,7 +7,7 @@ import { ProductMedia } from "@/components/product/ProductMedia";
 import { IconBag, IconHeart, IconMenu, IconSearch, IconUser } from "@/components/ui/Icons";
 import { useMounted, useScrollY } from "@/hooks";
 import { getProduct } from "@/data/products";
-import { cn } from "@/lib/utils";
+import { cn, routeOf } from "@/lib/utils";
 import { useCart } from "@/store/cart";
 import { useWishlist } from "@/store/wishlist";
 import { CartDrawer } from "./CartDrawer";
@@ -16,7 +16,7 @@ import { SearchOverlay } from "./SearchOverlay";
 import { categoriesOf, NAV_ITEMS, OCCASION_LINKS } from "./nav-data";
 
 export function Header() {
-  const pathname = usePathname();
+  const pathname = routeOf(usePathname());
   const scrollY = useScrollY();
   const mounted = useMounted();
   const cart = useCart();

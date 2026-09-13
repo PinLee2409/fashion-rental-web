@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { usePersistentState } from "@/hooks";
-import { cn } from "@/lib/utils";
+import { cn, routeOf } from "@/lib/utils";
 import { useSession } from "@/store/session";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -18,7 +18,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = usePersistentState<boolean>("stylerent.admin.sidebar", false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const bare = BARE_ROUTES.includes(pathname);
+  const bare = BARE_ROUTES.includes(routeOf(pathname));
   const blocked = session.hydrated && !session.signedIn && !bare;
 
   // Chưa đăng nhập thì đẩy về màn đăng nhập, giữ lại đường dẫn đang muốn vào.

@@ -47,3 +47,15 @@ export function deaccent(input: string): string {
     .replace(/Đ/g, "D")
     .toLowerCase();
 }
+
+/**
+ * Bỏ dấu "/" ở cuối đường dẫn.
+ *
+ * Bản export tĩnh cho GitHub Pages bật `trailingSlash` nên usePathname() trả về
+ * "/login/" thay vì "/login"; mọi phép so sánh đường dẫn đều đi qua hàm này để
+ * chạy giống nhau ở cả bản dev lẫn bản deploy.
+ */
+export function routeOf(pathname: string): string {
+  if (pathname.length > 1 && pathname.endsWith("/")) return pathname.slice(0, -1);
+  return pathname;
+}

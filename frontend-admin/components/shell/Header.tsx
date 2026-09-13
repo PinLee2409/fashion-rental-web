@@ -20,7 +20,7 @@ import { Dot, StatusChip } from "@/components/ui/Primitives";
 import { formatDateTime } from "@/lib/date";
 import { notificationsFor } from "@/lib/ops";
 import { ROLE_LABEL, ROLE_SCOPE, ROLE_SHORT, type AdminRole } from "@/lib/permissions";
-import { cn } from "@/lib/utils";
+import { cn, routeOf } from "@/lib/utils";
 import { useSession } from "@/store/session";
 import { CommandPalette } from "./CommandPalette";
 import { NAV } from "./nav";
@@ -36,7 +36,7 @@ export function Header({
   collapsed: boolean;
   onToggleSidebar: () => void;
 }) {
-  const pathname = usePathname();
+  const pathname = routeOf(usePathname());
   const router = useRouter();
   const session = useSession();
   const [paletteOpen, setPaletteOpen] = useState(false);

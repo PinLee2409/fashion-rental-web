@@ -1,0 +1,78 @@
+name: Deploy GitHub Pages
+
+# Đưa cả hai giao diện lên một site tĩnh:
+#   /                giao diện khách   (frontend)
+#   /admin           giao diện vận hành (frontend-admin)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Không chạy chồng nhau; deploy sau huỷ deploy trước còn đang dở.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  STATIC_EXPORT: "true"
+  SITE_BASE: /fashion-rental-web
+
+jobs:
+  build:
+    name: Build hai giao diện
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            frontend-admin/package-lock.json
+
+      - name: Build giao diện khách
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ env.SITE_BASE }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build giao diện vận hành
+        working-directory: frontend-admin
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ env.SITE_BASE }}/admin
+        run: |
+          npm ci
+          npm run build
+
+      - name: Gom hai bản build vào một site
+        run: |
+          mkdir -p site/admin
+          cp -r frontend/out/. site/
+          cp -r frontend-admin/out/. site/admin/
+          # Không có .nojekyll thì GitHub Pages bỏ qua thư mục _next
+          touch site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
