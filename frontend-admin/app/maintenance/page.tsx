@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { MaintenanceStatusChip, MaintenanceTypeChip, UnitCode } from "@/components/domain/Chips";
+import { MaintenanceDialog } from "@/components/domain/MaintenanceDialog";
 import { DataTable, type Column } from "@/components/ui/DataTable";
 import { IconAlert, IconCheck, IconGrid, IconList, IconPlus, IconWrench } from "@/components/ui/Icons";
 import { Modal } from "@/components/ui/Overlay";
@@ -38,17 +39,19 @@ export default function MaintenancePage() {
   const [search, setSearch] = useState("");
   const [statusOverrides, setStatusOverrides] = useState<Record<string, MaintenanceStatus>>({});
   const [detail, setDetail] = useState<MaintenanceTask | null>(null);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [created, setCreated] = useState<MaintenanceTask[]>([]);
 
   const statusOf = (t: MaintenanceTask) => statusOverrides[t.id] ?? t.status;
 
   const tasks = useMemo(() => {
     const q = deaccent(search.trim());
-    return MAINTENANCE.filter((t) => {
+    return [...created, ...MAINTENANCE].filter((t) => {
       if (tab !== "all" && t.type !== tab) return false;
       if (q && !deaccent(`${t.unitCode} ${t.productName} ${t.reason}`).includes(q)) return false;
       return true;
     });
-  }, [tab, search]);
+  }, [tab, search, created]);
 
   function move(task: MaintenanceTask, next: MaintenanceStatus) {
     setStatusOverrides((p) => ({ ...p, [task.id]: next }));
@@ -160,7 +163,7 @@ export default function MaintenancePage() {
             />
             <button
               type="button"
-              onClick={() => toast.push({ tone: "info", title: "Tạo việc thủ công", body: "Chọn cá thể cần xử lý ở màn hình Kho." })}
+              onClick={() => setCreateOpen(true)}
               className="btn btn-sm gap-1.5"
             >
               <IconPlus width={14} height={14} />
@@ -368,6 +371,21 @@ export default function MaintenancePage() {
           </div>
         )}
       </Modal>
+
+      <MaintenanceDialog
+        key={createOpen ? "open" : "closed"}
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        onCreate={(task) => {
+          setCreated((list) => [task, ...list]);
+          setCreateOpen(false);
+          toast.push({
+            tone: "success",
+            title: "Đã thêm vào hàng đợi",
+            body: task.unitCode + " · " + task.reason,
+          });
+        }}
+      />
     </>
   );
 }

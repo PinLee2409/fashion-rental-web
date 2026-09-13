@@ -145,7 +145,7 @@ function OrdersView() {
           <Link href={`/orders/${o.code}`} className="num text-[12.5px] underline-offset-2 hover:underline">
             {o.code}
           </Link>
-          <span className="text-[11px] text-ink-3">
+          <span data-row-detail className="text-[11px] text-ink-3">
             {o.channel === "walk_in" ? "Tại quầy" : "Online"} · {formatDate(o.createdAt.slice(0, 10))}
           </span>
         </div>
@@ -158,7 +158,7 @@ function OrdersView() {
       render: (o) => (
         <div className="min-w-0">
           <p className="truncate text-[13px]">{o.receiverName}</p>
-          <p className="num truncate text-[11.5px] text-ink-3">{o.receiverPhone}</p>
+          <p data-row-detail className="num truncate text-[11.5px] text-ink-3">{o.receiverPhone}</p>
         </div>
       ),
     },
@@ -170,7 +170,7 @@ function OrdersView() {
         <div className="flex items-center gap-2">
           <div className="flex -space-x-1.5">
             {o.items.slice(0, 2).map((it, i) => (
-              <ProductMedia key={i} image={it.image} ratio="1/1" className="h-7 w-7 rounded border border-surface" />
+              <ProductMedia key={i} thumb image={it.image} ratio="1/1" className="h-7 w-7 rounded border border-surface" />
             ))}
           </div>
           <span className="min-w-0 truncate text-[12.5px] text-ink-2">
@@ -189,7 +189,7 @@ function OrdersView() {
           <p className="num text-[12.5px]">
             {formatDate(o.pickupDate)} → {formatDate(o.returnDate)}
           </p>
-          <p className="text-[11px] text-ink-3">
+          <p data-row-detail className="text-[11px] text-ink-3">
             {o.items[0].days} ngày
             {["in_use", "overdue"].includes(o.status) && (
               <span className={cn("ml-1.5", o.status === "overdue" ? "text-danger" : "text-ink-2")}>
@@ -226,7 +226,7 @@ function OrdersView() {
             <p className={cn("text-[12.5px]", done ? "text-success" : "text-warning")}>
               {done ? "Đã thu đủ" : o.paidAmount === 0 ? "Chưa thu" : "Thu một phần"}
             </p>
-            {!done && <p className="num text-[11px] text-ink-3">còn {formatVnd(rest)}</p>}
+            {!done && <p data-row-detail className="num text-[11px] text-ink-3">còn {formatVnd(rest)}</p>}
           </div>
         );
       },

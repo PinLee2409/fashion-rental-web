@@ -12,14 +12,15 @@ function Portal({ children }: { children: ReactNode }) {
   return createPortal(children, document.body);
 }
 
-function Scrim({ onClick, soft }: { onClick: () => void; soft?: boolean }) {
+function Scrim({ onClick, soft, elevated }: { onClick: () => void; soft?: boolean; elevated?: boolean }) {
   return (
     <button
       type="button"
       aria-label="Đóng"
       onClick={onClick}
       className={cn(
-        "a-fade fixed inset-0 z-40 cursor-default",
+        "a-fade fixed inset-0 cursor-default",
+        elevated ? "z-[55]" : "z-40",
         soft ? "bg-ink/12" : "bg-ink/28",
       )}
     />
@@ -88,6 +89,7 @@ export function Modal({
   footer,
   width = "max-w-[520px]",
   tone,
+  elevated,
 }: {
   open: boolean;
   onClose: () => void;
@@ -97,6 +99,8 @@ export function Modal({
   footer?: ReactNode;
   width?: string;
   tone?: "danger";
+  /** Đặt true khi modal này mở chồng lên một modal khác. */
+  elevated?: boolean;
 }) {
   useLockBodyScroll(open);
   useEscape(open, onClose);
@@ -104,8 +108,8 @@ export function Modal({
 
   return (
     <Portal>
-      <Scrim onClick={onClose} />
-      <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-6">
+      <Scrim onClick={onClose} elevated={elevated} />
+      <div className={cn("fixed inset-0 flex items-end justify-center p-0 sm:items-center sm:p-6", elevated ? "z-[60]" : "z-50")}>
         <div
           role="dialog"
           aria-modal="true"

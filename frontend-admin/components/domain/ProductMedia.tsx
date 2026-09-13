@@ -15,6 +15,7 @@ export function ProductMedia({
   className,
   overlay = false,
   label,
+  thumb = false,
 }: {
   image: ProductImage;
   ratio?: "3/4" | "4/5" | "1/1" | "16/9" | "5/7";
@@ -22,6 +23,8 @@ export function ProductMedia({
   /** Phủ một lớp tối nhẹ để chữ đặt lên trên vẫn đọc được */
   overlay?: boolean;
   label?: string;
+  /** Ảnh nhỏ trong bảng — thu nhỏ theo khi bảng chuyển sang chế độ Gọn */
+  thumb?: boolean;
 }) {
   const [dark, light] = image.tone;
   const seed = hashString(image.id);
@@ -37,7 +40,7 @@ export function ProductMedia({
 
   if (image.src) {
     return (
-      <div className={cn("media-zoom relative overflow-hidden", ratioClass, className)}>
+      <div data-thumb={thumb ? "" : undefined} className={cn("media-zoom relative overflow-hidden", ratioClass, className)}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image.src}
@@ -52,6 +55,7 @@ export function ProductMedia({
 
   return (
     <div
+      data-thumb={thumb ? "" : undefined}
       className={cn("media-zoom relative overflow-hidden", ratioClass, className)}
       role="img"
       aria-label={image.alt}

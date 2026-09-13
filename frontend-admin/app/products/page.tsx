@@ -74,10 +74,10 @@ export default function ProductsPage() {
       sortValue: (p) => p.name,
       render: (p) => (
         <div className="flex items-center gap-2.5">
-          <ProductMedia image={p.images[0]} ratio="1/1" className="h-9 w-9 shrink-0 rounded" />
+          <ProductMedia thumb image={p.images[0]} ratio="1/1" className="h-9 w-9 shrink-0 rounded" />
           <div className="min-w-0">
             <p className="truncate text-[12.5px]">{p.name}</p>
-            <p className="num truncate text-[11px] text-ink-3">
+            <p data-row-detail className="num truncate text-[11px] text-ink-3">
               {p.sku} · {p.brandLine}
             </p>
           </div>
@@ -177,14 +177,10 @@ export default function ProductsPage() {
         description="Mỗi sản phẩm có nhiều biến thể size × màu, mỗi biến thể lại gồm nhiều cá thể vật lý. Giá và cọc đặt ở cấp biến thể."
         breadcrumb={[{ label: "Catalog" }, { label: "Sản phẩm" }]}
         actions={
-          <button
-            type="button"
-            onClick={() => toast.push({ tone: "info", title: "Tạo sản phẩm mới", body: "Mở trình soạn sản phẩm trống." })}
-            className="btn btn-sm gap-1.5"
-          >
+          <Link href="/products/new" className="btn btn-sm gap-1.5">
             <IconPlus width={14} height={14} />
             Thêm sản phẩm
-          </button>
+          </Link>
         }
       />
 

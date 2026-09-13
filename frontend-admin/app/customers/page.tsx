@@ -55,12 +55,12 @@ export default function CustomersPage() {
       sortValue: (c) => c.name,
       render: (c) => (
         <div className="flex items-center gap-2.5">
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-beige text-[11px] font-medium">
+          <span data-thumb className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-beige text-[11px] font-medium">
             {c.name.split(" ").slice(-1)[0][0]}
           </span>
           <div className="min-w-0">
             <p className="truncate text-[12.5px]">{c.name}</p>
-            <p className="num truncate text-[11px] text-ink-3">{c.phone}</p>
+            <p data-row-detail className="num truncate text-[11px] text-ink-3">{c.phone}</p>
           </div>
         </div>
       ),

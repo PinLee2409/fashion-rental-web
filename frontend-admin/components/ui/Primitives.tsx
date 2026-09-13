@@ -364,10 +364,12 @@ export function Switch({
   checked,
   onChange,
   label,
+  disabled,
 }: {
   checked: boolean;
   onChange: (next: boolean) => void;
   label?: string;
+  disabled?: boolean;
 }) {
   return (
     <button
@@ -375,16 +377,23 @@ export function Switch({
       role="switch"
       aria-checked={checked}
       aria-label={label}
+      disabled={disabled}
       onClick={() => onChange(!checked)}
       className={cn(
-        "relative h-[20px] w-[34px] shrink-0 rounded-full transition-colors duration-200",
+        "relative inline-block h-[20px] w-[34px] shrink-0 rounded-full align-middle transition-colors duration-200",
         checked ? "bg-ink" : "bg-line",
+        disabled && "cursor-not-allowed opacity-40",
       )}
     >
+      {/*
+        Nút tròn phải neo bằng left, không được để left:auto.
+        Nếu bỏ left thì trình duyệt lấy vị trí tĩnh trong button (căn giữa)
+        làm gốc, cộng thêm translate là nút văng ra ngoài rãnh.
+      */}
       <span
         className={cn(
-          "absolute top-[2px] h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          checked ? "translate-x-[16px]" : "translate-x-[2px]",
+          "absolute left-[2px] top-[2px] h-4 w-4 rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.25)] transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          checked ? "translate-x-[14px]" : "translate-x-0",
         )}
       />
     </button>

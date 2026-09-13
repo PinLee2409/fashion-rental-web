@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { UnitCode } from "@/components/domain/Chips";
+import { CustomerDialog } from "@/components/domain/CustomerDialog";
 import { ProductMedia } from "@/components/domain/ProductMedia";
 import { IconAlert, IconCheck, IconClose, IconSearch, IconUsers } from "@/components/ui/Icons";
 import { PageHeader } from "@/components/ui/PageParts";
@@ -37,6 +38,7 @@ export default function WalkInOrderPage() {
   const today = todayISO();
 
   const [customer, setCustomer] = useState<AdminCustomer | null>(null);
+  const [customerFormOpen, setCustomerFormOpen] = useState(false);
   const [customerQuery, setCustomerQuery] = useState("");
   const [pickup, setPickup] = useState(today);
   const [ret, setRet] = useState(addDays(today, 3));
@@ -184,7 +186,7 @@ export default function WalkInOrderPage() {
                 )}
                 <button
                   type="button"
-                  onClick={() => toast.push({ tone: "info", title: "Tạo khách mới", body: "Nhập tên, SĐT và giấy tờ thế chân." })}
+                  onClick={() => setCustomerFormOpen(true)}
                   className="btn btn-outline btn-sm mt-2"
                 >
                   + Khách mới
@@ -462,6 +464,19 @@ export default function WalkInOrderPage() {
           </Link>
         </aside>
       </div>
+
+      <CustomerDialog
+        key={customerFormOpen ? "open" : "closed"}
+        open={customerFormOpen}
+        existingPhones={CUSTOMERS.map((c) => c.phone)}
+        onClose={() => setCustomerFormOpen(false)}
+        onCreate={(created) => {
+          setCustomer(created);
+          setCustomerQuery("");
+          setCustomerFormOpen(false);
+          toast.push({ tone: "success", title: "Đã tạo hồ sơ khách", body: created.name + " · " + created.phone });
+        }}
+      />
     </>
   );
 }

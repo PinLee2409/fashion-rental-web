@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { ConditionChip, UnitCode, UnitStatusChip } from "@/components/domain/Chips";
+import { UnitTagDialog } from "@/components/domain/UnitTagDialog";
 import { DataTable, type Column, type Density } from "@/components/ui/DataTable";
-import { IconBox, IconDownload, IconPrinter, IconQr, IconSwap } from "@/components/ui/Icons";
+import { IconBox, IconDownload, IconPrinter, IconSwap } from "@/components/ui/Icons";
 import { Drawer, Modal } from "@/components/ui/Overlay";
 import { ActiveFilters, PageHeader, Toolbar } from "@/components/ui/PageParts";
 import { Callout, EmptyState, KeyValue, Meter, MoreMenu, Skeleton, StatusChip } from "@/components/ui/Primitives";
+import { QrCode } from "@/components/ui/Qr";
 import { useToast } from "@/components/ui/Toast";
 import { MAINTENANCE, UNITS, bookingsOfUnit, nextBookingOfUnit } from "@/data/operations";
 import { CATEGORIES } from "@/data/catalog";
@@ -44,6 +46,7 @@ function InventoryView() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [detail, setDetail] = useState<RentalUnit | null>(null);
+  const [tagUnits, setTagUnits] = useState<RentalUnit[] | null>(null);
   const [statusModal, setStatusModal] = useState<RentalUnit | null>(null);
   const [loading, setLoading] = useState(true);
   const [overrides, setOverrides] = useState<Record<string, UnitStatus>>({});
@@ -92,7 +95,7 @@ function InventoryView() {
       render: (u) => (
         <div className="min-w-0">
           <p className="truncate text-[12.5px]">{u.productName}</p>
-          <p className="truncate text-[11px] text-ink-3">
+          <p data-row-detail className="truncate text-[11px] text-ink-3">
             {u.size} · {u.color}
           </p>
         </div>
@@ -173,7 +176,7 @@ function InventoryView() {
                 disabled: !session.can("unit.lifecycle"),
                 onSelect: () => setStatusModal(u),
               },
-              { label: "In lại tem QR", onSelect: () => toast.push({ tone: "info", title: "Đang in tem", body: u.unitCode }) },
+              { label: "In lại tem QR", onSelect: () => setTagUnits([u]) },
               {
                 label: "Xem lịch cá thể",
                 onSelect: () => toast.push({ tone: "info", title: "Mở lịch thuê", body: u.unitCode }),
@@ -211,7 +214,9 @@ function InventoryView() {
             {session.can("unit.manage") && (
               <button
                 type="button"
-                onClick={() => toast.push({ tone: "info", title: "In mã QR hàng loạt", body: `${selected.length || rows.length} tem` })}
+                onClick={() =>
+                  setTagUnits(selected.length > 0 ? rows.filter((u) => selected.includes(u.unitCode)) : rows)
+                }
                 className="btn btn-outline btn-sm gap-1.5"
               >
                 <IconPrinter width={14} height={14} />
@@ -354,7 +359,11 @@ function InventoryView() {
         status={detail ? statusOf(detail) : undefined}
         onClose={() => setDetail(null)}
         onChangeStatus={(u) => setStatusModal(u)}
+        onPrintTag={(u) => setTagUnits([u])}
       />
+
+      {/* ---------------------------------------------------- tem QR cá thể -- */}
+      <UnitTagDialog open={tagUnits !== null} onClose={() => setTagUnits(null)} units={tagUnits ?? []} />
 
       {/* ------------------------------------------------- đổi trạng thái -- */}
       <StatusModal
@@ -382,11 +391,13 @@ function UnitDrawer({
   status,
   onClose,
   onChangeStatus,
+  onPrintTag,
 }: {
   unit: RentalUnit | null;
   status?: UnitStatus;
   onClose: () => void;
   onChangeStatus: (u: RentalUnit) => void;
+  onPrintTag: (u: RentalUnit) => void;
 }) {
   const session = useSession();
   const today = todayISO();
@@ -418,12 +429,25 @@ function UnitDrawer({
       <div className="space-y-4 px-5 py-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="grid h-16 w-16 shrink-0 place-items-center rounded-md border border-line bg-surface-2 text-ink-3">
-              <IconQr width={30} height={30} />
-            </span>
+            <button
+              type="button"
+              onClick={() => onPrintTag(unit)}
+              title="Xem và in tem QR"
+              className="grid shrink-0 place-items-center rounded-md border border-line bg-white p-1 transition-colors hover:border-ink"
+            >
+              <QrCode value={unit.unitCode} size={62} />
+            </button>
             <div>
               <UnitStatusChip status={effective} />
               <p className="mt-1.5 text-[11.5px] text-ink-2">{UNIT_STATUS[effective].description}</p>
+              <button
+                type="button"
+                onClick={() => onPrintTag(unit)}
+                className="mt-1.5 inline-flex items-center gap-1.5 text-[11.5px] text-ink-2 underline underline-offset-2 hover:text-ink"
+              >
+                <IconPrinter width={12} height={12} />
+                In tem QR
+              </button>
             </div>
           </div>
           <ConditionChip grade={unit.conditionGrade} />

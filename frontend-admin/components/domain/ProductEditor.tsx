@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ConditionChip, UnitCode, UnitStatusChip } from "@/components/domain/Chips";
 import { ProductMedia } from "@/components/domain/ProductMedia";
+import { VariantDialog } from "@/components/domain/VariantDialog";
 import { IconAlert, IconArrowLeft, IconPlus } from "@/components/ui/Icons";
 import { EmptyState, KeyValue, StatusChip, Tabs } from "@/components/ui/Primitives";
 import { useToast } from "@/components/ui/Toast";
@@ -13,6 +14,7 @@ import { getProduct } from "@/data/products";
 import { formatVnd } from "@/lib/money";
 import { describeTiers } from "@/lib/pricing";
 import { SETTINGS } from "@/lib/settings";
+import type { Variant } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 type Tab = "general" | "variants" | "pricing" | "units" | "rules";
@@ -22,6 +24,8 @@ export function ProductEditor({ slug }: { slug: string }) {
   const toast = useToast();
   const [tab, setTab] = useState<Tab>("general");
   const [dirty, setDirty] = useState(false);
+  const [variantOpen, setVariantOpen] = useState(false);
+  const [addedVariants, setAddedVariants] = useState<Variant[]>([]);
 
   const units = useMemo(() => UNITS.filter((u) => u.productSlug === slug), [slug]);
 
@@ -213,7 +217,7 @@ export function ProductEditor({ slug }: { slug: string }) {
               <h2 className="h-section">Biến thể size × màu</h2>
               <button
                 type="button"
-                onClick={() => toast.push({ tone: "info", title: "Thêm biến thể mới" })}
+                onClick={() => setVariantOpen(true)}
                 className="btn btn-outline btn-sm gap-1.5"
               >
                 <IconPlus width={13} height={13} />
@@ -234,11 +238,15 @@ export function ProductEditor({ slug }: { slug: string }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {product.variants.map((v) => {
-                    const unitCount = units.filter((u) => u.variantId === v.id).length;
+                  {[...addedVariants, ...product.variants].map((v) => {
+                    const isNew = addedVariants.some((x) => x.id === v.id);
+                    const unitCount = isNew ? v.unitCount : units.filter((u) => u.variantId === v.id).length;
                     return (
-                      <tr key={v.id}>
-                        <td className="text-[12.5px]">{v.size}</td>
+                      <tr key={v.id} className={isNew ? "bg-success-soft/40" : undefined}>
+                        <td className="text-[12.5px]">
+                          {v.size}
+                          {isNew && <span className="ml-1.5 text-[10.5px] text-success">mới</span>}
+                        </td>
                         <td>
                           <span className="inline-flex items-center gap-2 text-[12.5px]">
                             <span
@@ -473,6 +481,24 @@ export function ProductEditor({ slug }: { slug: string }) {
           </div>
         </div>
       </div>
+
+      <VariantDialog
+        key={variantOpen ? "open" : "closed"}
+        open={variantOpen}
+        product={product}
+        existing={[...product.variants, ...addedVariants]}
+        onClose={() => setVariantOpen(false)}
+        onCreate={(variant) => {
+          setAddedVariants((list) => [variant, ...list]);
+          setVariantOpen(false);
+          setDirty(true);
+          toast.push({
+            tone: "success",
+            title: "Đã thêm biến thể " + variant.size + " · " + variant.color,
+            body: variant.unitCount + " cá thể chờ dán tem — mã " + variant.barcode + "-001",
+          });
+        }}
+      />
     </>
   );
 }

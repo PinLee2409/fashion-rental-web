@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { UnitCode } from "@/components/domain/Chips";
 import { ProductMedia } from "@/components/domain/ProductMedia";
+import { ScanDialog } from "@/components/domain/QrScanner";
 import { IconAlert, IconCamera, IconCheck, IconScan, IconStore, IconTruck } from "@/components/ui/Icons";
 import { Modal } from "@/components/ui/Overlay";
 import { Callout, KeyValue, StatusChip } from "@/components/ui/Primitives";
@@ -47,6 +48,7 @@ export function HandoverFlow({
   const [step, setStep] = useState(0);
   const [idChecked, setIdChecked] = useState(false);
   const [scanInput, setScanInput] = useState("");
+  const [cameraOpen, setCameraOpen] = useState(false);
   const [scanned, setScanned] = useState<string[]>([]);
   const [conditionOk, setConditionOk] = useState(false);
   const [photos, setPhotos] = useState(0);
@@ -100,6 +102,7 @@ export function HandoverFlow({
   }
 
   return (
+    <>
     <Modal
       open={open}
       onClose={onClose}
@@ -200,8 +203,12 @@ export function HandoverFlow({
             <IconScan width={26} height={26} className="mx-auto text-ink-3" />
             <p className="mt-2 text-[13px]">Quét mã QR trên tem cá thể</p>
             <p className="mt-0.5 text-[11.5px] text-ink-3">
-              Dùng đầu đọc barcode hoặc camera. Không có thiết bị thì nhập mã thủ công bên dưới.
+              Đầu đọc barcode gõ thẳng vào ô bên dưới. Trên điện thoại hoặc tablet thì bật camera để quét.
             </p>
+            <button type="button" onClick={() => setCameraOpen(true)} className="btn btn-outline btn-sm mt-3 gap-1.5">
+              <IconCamera width={14} height={14} />
+              Bật camera quét mã
+            </button>
           </div>
 
           <form
@@ -457,5 +464,15 @@ export function HandoverFlow({
         </div>
       )}
     </Modal>
+
+    <ScanDialog
+      open={cameraOpen}
+      onClose={() => setCameraOpen(false)}
+      onDetect={(code) => addScan(code)}
+      continuous
+      title="Quét cá thể bàn giao"
+      hint="Quét từng món trước khi giao cho khách. Mã không thuộc đơn này sẽ bị cảnh báo ngay."
+    />
+    </>
   );
 }

@@ -291,8 +291,30 @@
   .tbl tbody tr:hover {
     background: var(--color-surface-2);
   }
+  /* Chế độ "Gọn": chiều cao dòng do ảnh đại diện và nút quyết định chứ không
+     chỉ do padding, nên phải thu nhỏ cả ba thứ thì mới thấy khác biệt. */
+  .tbl-compact thead th {
+    padding: 0.32rem 0.6rem;
+  }
   .tbl-compact tbody td {
-    padding: 0.4rem 0.75rem;
+    padding: 0.24rem 0.6rem;
+    line-height: 1.3;
+  }
+  /* Dòng phụ (mã SKU, số điện thoại, số ngày…) ẩn ở chế độ Gọn để mỗi dòng
+     chỉ còn một hàng chữ — đây mới là khác biệt người dùng thấy rõ. */
+  .tbl-compact [data-row-detail] {
+    display: none;
+  }
+  .tbl-compact [data-thumb] {
+    height: 22px;
+    width: 22px;
+  }
+  .tbl-compact .chip {
+    height: 19px;
+    font-size: 11px;
+  }
+  .tbl-compact .btn-sm {
+    height: 24px;
   }
   .tbl tbody tr:last-child td {
     border-bottom: 0;
@@ -367,6 +389,27 @@
     transform: none;
   }
 }
+@keyframes ad-toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ad-scanline {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
 @keyframes ad-shimmer {
   from {
     background-position: 200% 0;
@@ -402,6 +445,12 @@
 .a-pop {
   animation: ad-pop 200ms var(--ease-out-quint) both;
 }
+.a-toast {
+  animation: ad-toast-in 240ms var(--ease-out-quint) both;
+}
+.a-scanline {
+  animation: ad-scanline 2.6s ease-in-out infinite;
+}
 .a-alert {
   animation: ad-pulse-ring 2.4s ease-out infinite;
 }
@@ -429,6 +478,36 @@
 /* Timeline bar dùng ở màn Lịch thuê */
 .tl-grid {
   background-image: linear-gradient(to right, var(--color-line-2) 1px, transparent 1px);
+}
+
+/* ==========================================================================
+   In tem QR — chỉ in vùng .print-root, phần giao diện còn lại bị ẩn khi in
+   ========================================================================== */
+.print-root {
+  display: none;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff;
+    /* Modal khoá cuộn bằng overflow:hidden — phải trả lại khi in, nếu không
+       bản in bị cắt cụt ở trang đầu. */
+    overflow: visible !important;
+    height: auto !important;
+    padding-right: 0 !important;
+  }
+  /* Chỉ giấu giao diện khi trang thật sự có vùng in — Ctrl+P ở màn hình
+     thường vẫn in bình thường. */
+  body:has(.print-root) > *:not(.print-root) {
+    display: none !important;
+  }
+  .print-root {
+    display: block !important;
+  }
+  @page {
+    margin: 10mm;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

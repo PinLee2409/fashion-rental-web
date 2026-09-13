@@ -2,18 +2,24 @@
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 import { usePersistentState } from "@/hooks";
-import { CURRENT_USER_BY_ROLE } from "@/data/operations";
+import { CURRENT_USER_BY_ROLE, STAFF } from "@/data/operations";
 import type { StaffUser } from "@/lib/admin-types";
 import { can, canAny, type AdminRole, type Permission } from "@/lib/permissions";
 
 /**
  * Phiên làm việc của người dùng admin.
- * Bản demo cho phép đổi vai trò ngay trên header để thấy rõ UI thay đổi theo
- * quyền; hệ thống thật sẽ lấy vai trò từ token đăng nhập.
+ *
+ * Đăng nhập ở bản demo chỉ lưu user_id vào localStorage; hệ thống thật sẽ giữ
+ * JWT trả về từ POST /auth/login và đọc vai trò từ token. Nút đổi vai trò trên
+ * header vẫn giữ lại để chấm bài — nó thực chất là đăng nhập nhanh sang tài
+ * khoản mẫu của vai trò đó.
  */
 interface SessionValue {
+  signedIn: boolean;
   role: AdminRole;
   user: StaffUser;
+  signIn: (userId: string) => void;
+  signOut: () => void;
   setRole: (role: AdminRole) => void;
   can: (permission: Permission) => boolean;
   canAny: (permissions: Permission[]) => boolean;
@@ -29,21 +35,34 @@ export function useSession(): SessionValue {
 }
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [role, setRoleState, hydrated] = usePersistentState<AdminRole>("stylerent.admin.role", "staff");
+  const [userId, setUserId, hydrated] = usePersistentState<string | null>("stylerent.admin.session", null);
 
-  const setRole = useCallback((next: AdminRole) => setRoleState(next), [setRoleState]);
+  const user = useMemo(() => STAFF.find((u) => u.id === userId) ?? null, [userId]);
 
-  const value = useMemo<SessionValue>(
-    () => ({
+  const signIn = useCallback((id: string) => setUserId(id), [setUserId]);
+  const signOut = useCallback(() => setUserId(null), [setUserId]);
+  const setRole = useCallback(
+    (role: AdminRole) => setUserId(CURRENT_USER_BY_ROLE[role].id),
+    [setUserId],
+  );
+
+  const value = useMemo<SessionValue>(() => {
+    // Khi chưa đăng nhập vẫn phải trả về một user để component con không phải
+    // kiểm tra null ở khắp nơi; AdminShell đã chặn không cho render nội dung.
+    const active = user ?? CURRENT_USER_BY_ROLE.staff;
+    const role = active.role;
+    return {
+      signedIn: Boolean(user),
       role,
-      user: CURRENT_USER_BY_ROLE[role],
+      user: active,
+      signIn,
+      signOut,
       setRole,
       can: (permission) => can(role, permission),
       canAny: (permissions) => canAny(role, permissions),
       hydrated,
-    }),
-    [role, setRole, hydrated],
-  );
+    };
+  }, [user, signIn, signOut, setRole, hydrated]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

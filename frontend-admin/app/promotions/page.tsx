@@ -141,16 +141,21 @@ export default function PromotionsPage() {
     {
       key: "status",
       header: "Trạng thái",
-      width: "112px",
+      width: "150px",
       render: (p) => (
-        <Switch
-          checked={activeOf(p)}
-          label={`Bật/tắt ${p.code}`}
-          onChange={(next) => {
-            setStates((s) => ({ ...s, [p.code]: next }));
-            toast.push({ tone: next ? "success" : "warning", title: next ? `Đã bật ${p.code}` : `Đã tắt ${p.code}` });
-          }}
-        />
+        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+          <Switch
+            checked={activeOf(p)}
+            label={`Bật/tắt ${p.code}`}
+            onChange={(next) => {
+              setStates((s) => ({ ...s, [p.code]: next }));
+              toast.push({ tone: next ? "success" : "warning", title: next ? `Đã bật ${p.code}` : `Đã tắt ${p.code}` });
+            }}
+          />
+          <span className={activeOf(p) ? "text-[11.5px] text-ink-2" : "text-[11.5px] text-ink-3"}>
+            {activeOf(p) ? "Đang chạy" : "Tắt"}
+          </span>
+        </div>
       ),
     },
     {
@@ -209,6 +214,7 @@ export default function PromotionsPage() {
       />
 
       <PromotionForm
+        key={editing ? editing.code : creating ? "new" : "closed"}
         open={creating || Boolean(editing)}
         promo={editing}
         onClose={() => {

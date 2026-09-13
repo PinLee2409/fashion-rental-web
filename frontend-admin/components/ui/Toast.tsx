@@ -34,7 +34,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="pointer-events-none fixed bottom-4 right-4 z-[60] flex flex-col items-end gap-2">
+      {/*
+        Toast neo ở góc trên bên phải, ngay dưới header (--header-h) để không
+        che nút thông báo và menu người dùng. Trên mobile thì bám hai mép.
+      */}
+      <div className="pointer-events-none fixed inset-x-3 top-[calc(var(--header-h)+12px)] z-[80] flex flex-col items-end gap-2 sm:inset-x-auto sm:right-4">
         {toasts.map((t) => (
           <ToastCard key={t.id} toast={t} onDone={() => setToasts((p) => p.filter((x) => x.id !== t.id))} />
         ))}
@@ -64,7 +68,11 @@ function ToastCard({ toast, onDone }: { toast: Toast; onDone: () => void }) {
   }[toast.tone];
 
   return (
-    <div className="a-rise pointer-events-auto flex w-[336px] items-start gap-2.5 rounded-md border border-line bg-surface px-3.5 py-3 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.3)]">
+    <div
+      role="status"
+      aria-live="polite"
+      className="a-toast pointer-events-auto flex w-full items-start gap-2.5 rounded-md border border-line bg-surface px-3.5 py-3 shadow-[0_14px_36px_-18px_rgba(0,0,0,0.34)] sm:w-[336px]"
+    >
       <span className={cn("mt-px shrink-0", color)}>{icon}</span>
       <div className="min-w-0 flex-1">
         <p className="text-[13px] font-medium leading-snug">{toast.title}</p>

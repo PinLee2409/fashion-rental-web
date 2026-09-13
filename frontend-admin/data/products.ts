@@ -94,8 +94,35 @@ function buildImages(seed: ProductSeed): ProductImage[] {
   }));
 }
 
+/**
+ * Mã màu 2 ký tự phải là duy nhất trong một sản phẩm, vì nó nằm trong barcode
+ * của biến thể và barcode lại là tiền tố của mọi mã cá thể. Hai màu cùng đầu
+ * ("Trắng ngà" / "Trắng tinh") mà trùng mã thì hai cá thể khác nhau sẽ mang
+ * cùng một mã QR — quét ở quầy sẽ ra nhầm món.
+ */
+function colorCodesOf(colors: ColorSeed[]): Map<string, string> {
+  const used = new Set<string>();
+  const map = new Map<string, string>();
+  for (const color of colors) {
+    const base = colorCode(color.name);
+    let candidate = base;
+    // Đụng mã thì lấy ký tự thứ hai lùi dần trong tên, cuối cùng mới đánh số.
+    const letters = deaccent(color.name).replace(/[^a-z]/g, "");
+    for (let i = 2; used.has(candidate) && i < letters.length; i += 1) {
+      candidate = (letters[0] + letters[i]).toUpperCase();
+    }
+    for (let n = 2; used.has(candidate); n += 1) {
+      candidate = (base[0] + String(n)).toUpperCase();
+    }
+    used.add(candidate);
+    map.set(color.name, candidate);
+  }
+  return map;
+}
+
 function buildVariants(seed: ProductSeed): Variant[] {
   const variants: Variant[] = [];
+  const codes = colorCodesOf(seed.colors);
   for (const color of seed.colors) {
     for (const size of sortSizes(seed.sizes)) {
       const key = `${size}|${color.name}`;
@@ -111,7 +138,7 @@ function buildVariants(seed: ProductSeed): Variant[] {
         extraDayPrice: extraDayPriceOf(seed.pricePerDay),
         tiers: makeTiers(seed.pricePerDay),
         unitCount,
-        barcode: `${seed.sku}-${size}-${colorCode(color.name)}`,
+        barcode: `${seed.sku}-${size}-${codes.get(color.name)}`,
       });
     }
   }

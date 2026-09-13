@@ -346,3 +346,43 @@ export const IconCamera = (p: IconProps) => (
     <circle cx="12" cy="13" r="3.5" />
   </svg>
 );
+
+export const IconEye = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+export const IconEyeOff = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <path d="M9.9 5.8A9.9 9.9 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3 3.8" />
+    <path d="M6.3 7.7A16.6 16.6 0 0 0 2.5 12S6 18.5 12 18.5a9.7 9.7 0 0 0 3.9-.8" />
+    <path d="M10 10a2.8 2.8 0 0 0 4 4" />
+    <path d="m3.5 3.5 17 17" />
+  </svg>
+);
+
+export const IconLock = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <rect x="4.5" y="10.5" width="15" height="9.5" rx="1.5" />
+    <path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" />
+  </svg>
+);
+
+export const IconCameraOff = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <path d="M20 15.6V8.5a1.5 1.5 0 0 0-1.5-1.5h-3l-1.2-2h-4.6l-.5.8" />
+    <path d="M4 7.6A1.5 1.5 0 0 0 3.5 8.5v9A1.5 1.5 0 0 0 5 19h11.5" />
+    <path d="M9.8 9.9a3.5 3.5 0 0 0 4.7 4.7" />
+    <path d="m3 3 18 18" />
+  </svg>
+);
+
+export const IconTrash = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <path d="M4.5 6.5h15" />
+    <path d="M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5" />
+    <path d="M6.5 6.5 7.3 19a1.5 1.5 0 0 0 1.5 1.4h6.4a1.5 1.5 0 0 0 1.5-1.4l.8-12.5" />
+  </svg>
+);

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { OrderStatusChip, UnitCode } from "@/components/domain/Chips";
+import { ScanDialog } from "@/components/domain/QrScanner";
 import { ProductMedia } from "@/components/domain/ProductMedia";
 import {
   IconAlert,
@@ -62,6 +63,7 @@ function ReturnDesk() {
   const [query, setQuery] = useState("");
   const [orderCode, setOrderCode] = useState<string | null>(null);
   const [scanInput, setScanInput] = useState("");
+  const [cameraOpen, setCameraOpen] = useState(false);
   const [lines, setLines] = useState<Record<string, LineState>>({});
 
   useEffect(() => {
@@ -261,8 +263,20 @@ function ReturnDesk() {
               <button type="submit" className="btn btn-sm shrink-0">
                 Nhận
               </button>
+              <button
+                type="button"
+                onClick={() => setCameraOpen(true)}
+                title="Bật camera để quét mã QR"
+                className="btn btn-outline btn-sm shrink-0 gap-1.5"
+              >
+                <IconCamera width={14} height={14} />
+                <span className="hidden sm:inline">Camera</span>
+              </button>
             </div>
-            <p className="field-hint">Dùng đầu đọc barcode hoặc camera. Quét khi chưa chọn đơn sẽ tự mở đúng đơn.</p>
+            <p className="field-hint">
+              Đầu đọc barcode gõ thẳng vào ô này. Không có đầu đọc thì bấm Camera để quét bằng máy ảnh thiết bị. Quét khi
+              chưa chọn đơn sẽ tự mở đúng đơn.
+            </p>
           </form>
 
           <div>
@@ -605,6 +619,16 @@ function ReturnDesk() {
           </aside>
         </div>
       )}
+
+      {/* Camera giữ nguyên trạng thái mở để quét liên tiếp nhiều cá thể trong một đơn. */}
+      <ScanDialog
+        open={cameraOpen}
+        onClose={() => setCameraOpen(false)}
+        onDetect={(code) => scan(code)}
+        continuous
+        title="Quét cá thể trả về"
+        hint="Đưa tem QR trên trang phục vào khung hình. Quét xong món này thì đưa món tiếp theo vào, camera vẫn bật."
+      />
     </>
   );
 }

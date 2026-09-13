@@ -2,7 +2,7 @@
 
 Giao diện vận hành cho hệ thống cho thuê trang phục, dựng theo **Đặc tả hệ thống cho thuê trang phục** (tài liệu nghiệp vụ là nguồn sự thật duy nhất). Phần khách hàng nằm ở dự án `frontend`.
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · không thêm thư viện ngoài.
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · `qrcode` (sinh mã QR) · `jsqr` (đọc mã QR từ camera).
 
 ```bash
 npm install
@@ -86,6 +86,8 @@ Hành động trong màn hình cũng theo quyền: nhân viên kho không thấy
 | `/reports` | A14 | Doanh thu · tỷ lệ khai thác · tồn ế |
 | `/settings` · `/settings/roles` · `/settings/users` | A15 | Cấu hình vận hành (PHỤ LỤC A), ma trận phân quyền, người dùng |
 | `/approvals` | — | Hàng đợi duyệt của quản lý, suy ra từ BR-23 và BR-33 |
+| `/login` | — | Đăng nhập nhân viên vận hành, render ngoài khung admin |
+| `/products/new` | A06 | Tạo sản phẩm: sinh biến thể size × màu, bảng giá tự tính, xem trước mã cá thể kèm QR |
 
 ---
 
@@ -117,12 +119,15 @@ app/                      route theo §8.1 (phần admin)
 components/
   ui/        Icons · Primitives · Overlay · Toast · DataTable · PageParts
   shell/     AdminShell · Sidebar · Header · CommandPalette · nav
+  ui/ (tiếp) Qr (sinh mã QR bằng SVG · tem cá thể)
   domain/    Chips · ProductMedia · OrderDetailView · AssignUnitDrawer
              HandoverFlow · ProductEditor · CustomerDetail
+             QrScanner (camera) · UnitTagDialog (in tem) · VariantDialog
+             CustomerDialog · MaintenanceDialog
 data/        operations (nguồn dữ liệu vận hành) · products · catalog · promotions · reviews
-lib/         admin-types · permissions · unit-status · ops (selector)
+lib/         admin-types · permissions · unit-status · ops (selector) · auth (đăng nhập)
              + dùng chung với frontend: types · settings · money · date · pricing · availability · policy · order-status
-store/       session (vai trò hiện tại)
+store/       session (người dùng đang đăng nhập + vai trò)
 ```
 
 `data/operations.ts` dựng toàn bộ dữ liệu vận hành trong **một lượt** — cá thể, đơn, booking, hàng đợi kho, yêu cầu duyệt — nên trạng thái cá thể luôn khớp với trạng thái đơn và lịch. Sinh bằng PRNG có seed để server và client ra cùng kết quả.
@@ -145,7 +150,8 @@ Tình huống vận hành có sẵn để thử: trả đúng hạn · trả tr�
 ## 7. Ghi chú & giả định
 
 1. **Quyền cho Đánh giá và Cài đặt**: đặc tả không nêu mã quyền riêng cho hai module này, nên frontend suy từ quyền gần nhất — kiểm duyệt đánh giá gắn với `catalog.manage`, cấu hình hệ thống gắn với `user.manage`. Đã ghi chú trong `lib/permissions.ts` để dễ chỉnh khi backend chốt.
-2. **Quét QR** mô phỏng bằng ô nhập mã (đầu đọc barcode hoạt động y như gõ phím). Khi nối `html5-qrcode`, chỉ cần thay phần nhập liệu trong `HandoverFlow` và `/returns`.
+2. **Quét QR chạy thật bằng camera thiết bị**: `ScanDialog` lấy luồng hình qua `getUserMedia`, giải mã từng khung bằng `jsqr`, chống quét trùng trong 1,6 giây và có chế độ quét liên tiếp cho quầy nhận trả. Ô nhập mã vẫn giữ nguyên vì đầu đọc barcode cắm USB gõ thẳng vào ô đó. Lưu ý: `getUserMedia` chỉ chạy trên HTTPS hoặc localhost — khi triển khai thật phải có chứng chỉ.
 3. **Mọi thao tác đều là mock**: đổi trạng thái, gán cá thể, duyệt phí chỉ thay đổi state trong phiên, không gọi API và không lưu lại sau khi tải lại trang.
 4. **Ảnh sản phẩm** dùng chung cơ chế với bản khách hàng: khung hình dựng bằng SVG theo tông màu, thay bằng ảnh thật là đổi ở một chỗ.
-5. **Kanban không kéo thả**: chuyển cột bằng nút hành động rõ nghĩa (Nhận việc → Gửi QC → QC đạt / Không đạt) để dùng được bằng bàn phím và trên tablet. Luôn có chế độ danh sách song song.
+5. **Đăng nhập là mock phía frontend**: `lib/auth.ts` đối chiếu email trong danh sách nhân viên với một mật khẩu mẫu chung, phiên lưu `user_id` vào `localStorage`. Hệ thống thật gọi `POST /auth/login` (§7.1) và đọc vai trò từ JWT — frontend không đổi gì ngoài `lib/auth.ts` và `store/session.tsx`. Mật khẩu không bao giờ được lưu lại.
+6. **Kanban không kéo thả**: chuyển cột bằng nút hành động rõ nghĩa (Nhận việc → Gửi QC → QC đạt / Không đạt) để dùng được bằng bàn phím và trên tablet. Luôn có chế độ danh sách song song.
