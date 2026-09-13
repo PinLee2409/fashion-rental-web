@@ -5,7 +5,7 @@ Monorepo cho nền tảng cho thuê thời trang. Gồm 2 ứng dụng Next.js �
 | Thư mục | Ứng dụng | Mô tả |
 | --- | --- | --- |
 | [`frontend/`](frontend) | Customer web | Giao diện người dùng cuối: duyệt, thuê, đặt hàng |
-| [`frontend-admin/`](frontend-admin) | Admin dashboard | Trang quản trị: sản phẩm, đơn thuê, người dùng |
+| [`frontend-admin/`](frontend-admin) | Admin / Operations | Vận hành: đơn thuê, lịch bận, kho cá thể, nhận trả, duyệt phí, báo cáo |
 
 ## Tech stack
 
