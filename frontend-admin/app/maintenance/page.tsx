@@ -105,14 +105,14 @@ export default function MaintenancePage() {
     {
       key: "reason",
       header: "Lý do",
-      hideBelow: "lg",
+      hideBelow: "3xl",
       render: (t) => <span className="text-[12px] text-ink-2">{t.reason}</span>,
     },
     {
       key: "assignee",
       header: "Phụ trách",
       width: "140px",
-      hideBelow: "xl",
+      hideBelow: "5xl",
       render: (t) => (
         <span className="text-[12px] text-ink-2">{STAFF.find((s) => s.id === t.assignedTo)?.name ?? "Chưa nhận"}</span>
       ),

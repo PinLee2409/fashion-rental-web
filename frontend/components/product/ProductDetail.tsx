@@ -517,6 +517,9 @@ export function ProductDetail({ product }: { product: Product }) {
           <IconRuler width={14} height={14} className="mt-0.5 shrink-0" />
           Lưu số đo trong hồ sơ để shop soạn cá thể vừa người nhất cho bạn.
         </p>
+        <Link href="/size-guide" className="btn btn-outline btn-sm mt-5">
+          Nhập số đo để được gợi ý size
+        </Link>
       </Modal>
     </div>
   );

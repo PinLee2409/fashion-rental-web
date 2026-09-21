@@ -149,10 +149,10 @@ export default function CalendarPage() {
       ) : (
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
-            <div className="min-w-[880px]">
+            <div className="min-w-[720px] @4xl:min-w-[880px]">
               {/* Hàng ngày */}
               <div className="sticky top-0 z-10 flex border-b border-line bg-surface-2">
-                <div className="w-[220px] shrink-0 border-r border-line px-3 py-2 text-[11.5px] font-medium text-ink-2">
+                <div className="w-[148px] shrink-0 border-r border-line px-3 py-2 text-[11.5px] font-medium text-ink-2 @4xl:w-[220px]">
                   Cá thể
                 </div>
                 <div className="flex flex-1">
@@ -185,7 +185,7 @@ export default function CalendarPage() {
                   const unitBookings = bookingsInView.filter((b) => b.unitCode === unit.unitCode);
                   return (
                     <li key={unit.unitCode} className="flex border-b border-line-2 last:border-b-0">
-                      <div className="w-[220px] shrink-0 border-r border-line px-3 py-2">
+                      <div className="w-[148px] shrink-0 border-r border-line px-3 py-2 @4xl:w-[220px]">
                         <div className="flex items-center gap-1.5">
                           <UnitCode code={unit.unitCode} />
                         </div>

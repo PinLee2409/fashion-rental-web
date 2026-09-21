@@ -296,7 +296,7 @@ export function Tabs<T extends string>({
   onChange: (key: T) => void;
 }) {
   return (
-    <div className="no-scrollbar flex gap-0.5 overflow-x-auto border-b border-line">
+    <div className="no-scrollbar scroll-hint-x flex gap-0.5 overflow-x-auto border-b border-line">
       {tabs.map((t) => {
         const active = t.key === value;
         return (

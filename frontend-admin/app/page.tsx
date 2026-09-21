@@ -83,7 +83,7 @@ export default function DashboardPage() {
             />
           </div>
         ) : (
-          <ul className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid gap-2 @2xl:grid-cols-2 @5xl:grid-cols-3">
             {attention.map((item) => (
               <li key={item.id} className="card card-pad flex min-w-0 flex-col gap-2.5">
                 <div className="flex items-start gap-2.5">
@@ -114,7 +114,7 @@ export default function DashboardPage() {
       </Section>
 
       {/* ------------------------------------------------------ chỉ số -- */}
-      <div className="mb-6 grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-6">
+      <div className="mb-6 grid grid-cols-2 gap-2 @xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-6">
         {!isWarehouse && (
           <>
             <StatCard
@@ -187,7 +187,7 @@ export default function DashboardPage() {
         )}
       </div>
 
-      <div className="grid min-w-0 gap-5 xl:grid-cols-[1.25fr_1fr]">
+      <div className="grid min-w-0 gap-5 @5xl:grid-cols-[1.25fr_1fr]">
         {/* -------------------------------------------- việc trong ngày -- */}
         <Section
           title="Hàng đợi hôm nay"
@@ -319,7 +319,7 @@ export default function DashboardPage() {
 
       {/* ------------------------------------------------------ báo cáo -- */}
       {session.can("report.view") && (
-        <div className="mt-6 grid gap-5 xl:grid-cols-[1.25fr_1fr]">
+        <div className="mt-6 grid gap-5 @5xl:grid-cols-[1.25fr_1fr]">
           <Section title="Doanh thu thuê 30 ngày" description="Chỉ tính tiền thuê và phí — tiền cọc không phải doanh thu.">
             <div className="card card-pad">
               {mounted ? <RevenueChart /> : <div className="skeleton h-[132px] w-full" />}

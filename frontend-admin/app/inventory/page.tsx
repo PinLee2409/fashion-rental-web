@@ -104,15 +104,15 @@ function InventoryView() {
     {
       key: "status",
       header: "Trạng thái",
-      width: "140px",
+      width: "128px",
       sortValue: (u) => UNIT_STATUS[statusOf(u)].label,
       render: (u) => <UnitStatusChip status={statusOf(u)} />,
     },
     {
       key: "condition",
       header: "Tình trạng",
-      width: "100px",
-      hideBelow: "lg",
+      width: "96px",
+      hideBelow: "4xl",
       sortValue: (u) => u.conditionGrade,
       render: (u) => <ConditionChip grade={u.conditionGrade} />,
     },
@@ -120,23 +120,24 @@ function InventoryView() {
       key: "rentals",
       header: "Lượt thuê",
       align: "right",
-      width: "86px",
+      width: "82px",
+      hideBelow: "3xl",
       sortValue: (u) => u.rentalCount,
       render: (u) => <span className="num text-[12.5px]">{u.rentalCount}</span>,
     },
     {
       key: "location",
       header: "Vị trí",
-      width: "90px",
-      hideBelow: "xl",
+      width: "86px",
+      hideBelow: "6xl",
       sortValue: (u) => u.location ?? "",
       render: (u) => <span className="num text-[12px] text-ink-2">{u.location ?? "—"}</span>,
     },
     {
       key: "cleaned",
       header: "Giặt lần cuối",
-      width: "130px",
-      hideBelow: "xl",
+      width: "118px",
+      hideBelow: "5xl",
       sortValue: (u) => u.lastCleanedAt ?? "",
       render: (u) => (
         <span className="num text-[12px] text-ink-2">{u.lastCleanedAt ? formatDate(u.lastCleanedAt.slice(0, 10)) : "—"}</span>
@@ -145,8 +146,8 @@ function InventoryView() {
     {
       key: "next",
       header: "Booking kế tiếp",
-      width: "148px",
-      hideBelow: "lg",
+      width: "134px",
+      hideBelow: "4xl",
       render: (u) => {
         const next = mounted ? nextBookingOfUnit(u.unitCode) : undefined;
         return next ? (

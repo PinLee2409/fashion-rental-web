@@ -31,7 +31,7 @@ export function AccountNav() {
 
   return (
     <nav className="min-w-0 lg:sticky lg:top-[100px] lg:self-start">
-      <ul className="no-scrollbar flex gap-1 overflow-x-auto border-b border-line pb-1 lg:block lg:space-y-1 lg:border-b-0 lg:pb-0">
+      <ul className="no-scrollbar scroll-hint-x flex gap-1 overflow-x-auto border-b border-line pb-1 lg:block lg:space-y-1 lg:overflow-visible lg:border-b-0 lg:pb-0 lg:[animation:none] lg:[mask-image:none]">
         {LINKS.map((link) => {
           const active = link.href === "/account" ? pathname === link.href : pathname.startsWith(link.href);
           return (

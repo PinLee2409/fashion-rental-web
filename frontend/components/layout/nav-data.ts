@@ -42,7 +42,7 @@ export const FOOTER_LINKS = [
       { label: "Thuê đồ hoạt động thế nào", href: "/how-it-works" },
       { label: "Chính sách thuê & hoàn cọc", href: "/policies" },
       { label: "Câu hỏi thường gặp", href: "/how-it-works#faq" },
-      { label: "Bảng size", href: "/how-it-works#size" },
+      { label: "Bảng size & gợi ý size", href: "/size-guide" },
     ],
   },
   {

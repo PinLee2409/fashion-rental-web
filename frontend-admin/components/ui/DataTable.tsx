@@ -15,16 +15,37 @@ export interface Column<T> {
   sortValue?: (row: T) => string | number;
   align?: "left" | "right";
   width?: string;
-  /** Ẩn cột dưới breakpoint này để bảng không vỡ trên tablet */
-  hideBelow?: "sm" | "md" | "lg" | "xl";
+  /**
+   * Ẩn cột khi vùng chứa bảng hẹp hơn mốc này.
+   *
+   * Mốc đo theo *container* (bề rộng thật còn lại sau thanh bên) chứ không theo
+   * viewport — vì thanh bên ăn mất 244px, một bảng "vừa" ở viewport 1280px thực
+   * ra chỉ có ~996px để vẽ. Quy đổi sang viewport khi thanh bên đang mở:
+   *
+   *   md  = 448px  →  ~732px viewport
+   *   lg  = 512px  →  ~796px
+   *   xl  = 576px  →  ~860px
+   *   2xl = 672px  →  ~956px
+   *   3xl = 768px  → ~1052px
+   *   4xl = 896px  → ~1180px
+   *   5xl = 1024px → ~1308px
+   *   6xl = 1152px → ~1436px
+   *   7xl = 1280px → ~1564px
+   */
+  hideBelow?: "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
   className?: string;
 }
 
 const HIDE_CLASS = {
-  sm: "hidden sm:table-cell",
-  md: "hidden md:table-cell",
-  lg: "hidden lg:table-cell",
-  xl: "hidden xl:table-cell",
+  md: "hidden @md:table-cell",
+  lg: "hidden @lg:table-cell",
+  xl: "hidden @xl:table-cell",
+  "2xl": "hidden @2xl:table-cell",
+  "3xl": "hidden @3xl:table-cell",
+  "4xl": "hidden @4xl:table-cell",
+  "5xl": "hidden @5xl:table-cell",
+  "6xl": "hidden @6xl:table-cell",
+  "7xl": "hidden @7xl:table-cell",
 } as const;
 
 export function DataTable<T>({
@@ -105,7 +126,7 @@ export function DataTable<T>({
       )}
 
       {/* Bảng — desktop & tablet */}
-      <div className={cn("overflow-x-auto", cardRender && "hidden md:block")} style={maxHeight ? { maxHeight, overflowY: "auto" } : undefined}>
+      <div className={cn("overflow-x-auto", cardRender && "hidden @2xl:block")} style={maxHeight ? { maxHeight, overflowY: "auto" } : undefined}>
         <table className={cn("tbl", density === "compact" && "tbl-compact")}>
           <thead>
             <tr>
@@ -205,7 +226,7 @@ export function DataTable<T>({
 
       {/* Thẻ — mobile */}
       {cardRender && (
-        <ul className="divide-y divide-line md:hidden">
+        <ul className="divide-y divide-line @2xl:hidden">
           {sorted.map((row) => (
             <li
               key={getKey(row)}

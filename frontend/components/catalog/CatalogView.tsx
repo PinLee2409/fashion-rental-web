@@ -201,7 +201,7 @@ export function CatalogView({ collection }: { collection: Collection }) {
         </Reveal>
 
         {collection.relatedCategories.length > 0 && (
-          <Reveal delay={120} className="no-scrollbar mt-8 flex gap-2 overflow-x-auto pb-1">
+          <Reveal delay={120} className="no-scrollbar scroll-hint-x mt-8 flex gap-2 overflow-x-auto pb-1">
             {collection.relatedCategories.map((c) => (
               <Link
                 key={c.slug}

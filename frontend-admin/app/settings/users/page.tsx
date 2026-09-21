@@ -82,14 +82,14 @@ export default function UsersPage() {
     {
       key: "shift",
       header: "Ca / bộ phận",
-      hideBelow: "lg",
+      hideBelow: "4xl",
       render: (u) => <span className="text-[12px] text-ink-2">{u.shift ?? "—"}</span>,
     },
     {
       key: "active",
       header: "Hoạt động gần nhất",
-      width: "170px",
-      hideBelow: "md",
+      width: "152px",
+      hideBelow: "3xl",
       sortValue: (u) => u.lastActiveAt,
       render: (u) => <span className="num text-[12px] text-ink-2">{formatDateTime(u.lastActiveAt)}</span>,
     },

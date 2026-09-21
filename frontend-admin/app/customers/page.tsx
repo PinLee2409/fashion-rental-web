@@ -96,7 +96,7 @@ export default function CustomersPage() {
       header: "Trả trễ",
       align: "right",
       width: "82px",
-      hideBelow: "lg",
+      hideBelow: "3xl",
       sortValue: (c) => c.lateReturns,
       render: (c) =>
         c.lateReturns > 0 ? (
@@ -110,7 +110,7 @@ export default function CustomersPage() {
       header: "Hư hỏng",
       align: "right",
       width: "88px",
-      hideBelow: "lg",
+      hideBelow: "3xl",
       sortValue: (c) => c.damageIncidents,
       render: (c) =>
         c.damageIncidents > 0 ? (
@@ -123,7 +123,7 @@ export default function CustomersPage() {
       key: "last",
       header: "Thuê gần nhất",
       width: "130px",
-      hideBelow: "xl",
+      hideBelow: "5xl",
       sortValue: (c) => c.lastRentalAt ?? "",
       render: (c) => (
         <span className="num text-[12px] text-ink-2">{c.lastRentalAt ? formatDate(c.lastRentalAt.slice(0, 10)) : "—"}</span>

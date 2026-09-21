@@ -21,6 +21,7 @@ import { formatDateTime } from "@/lib/date";
 import { notificationsFor } from "@/lib/ops";
 import { ROLE_LABEL, ROLE_SCOPE, ROLE_SHORT, type AdminRole } from "@/lib/permissions";
 import { cn, routeOf } from "@/lib/utils";
+import { useNotificationReads } from "@/store/notifications";
 import { useSession } from "@/store/session";
 import { CommandPalette } from "./CommandPalette";
 import { NAV } from "./nav";
@@ -42,11 +43,11 @@ export function Header({
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [read, setRead] = useState<string[]>([]);
+  const reads = useNotificationReads();
   const menuWrap = useRef<HTMLDivElement>(null);
 
   const notifications = notificationsFor(session.role);
-  const unread = notifications.filter((n) => !n.read && !read.includes(n.id));
+  const unread = notifications.filter((n) => !reads.isRead(n.id, n.read));
 
   // ⌘K / Ctrl+K mở tìm kiếm toàn hệ thống
   useEffect(() => {
@@ -249,26 +250,31 @@ export function Header({
         title="Thông báo vận hành"
         subtitle={unread.length > 0 ? `${unread.length} thông báo chưa đọc` : "Đã đọc hết"}
         footer={
-          unread.length > 0 ? (
-            <button
-              type="button"
-              onClick={() => setRead(notifications.map((n) => n.id))}
-              className="btn btn-outline btn-sm btn-block"
-            >
-              Đánh dấu đã đọc tất cả
-            </button>
-          ) : null
+          <div className="flex gap-2">
+            {unread.length > 0 && (
+              <button
+                type="button"
+                onClick={() => reads.markAllRead(notifications.map((n) => n.id))}
+                className="btn btn-outline btn-sm flex-1"
+              >
+                Đánh dấu đã đọc tất cả
+              </button>
+            )}
+            <Link href="/notifications" onClick={() => setNotifOpen(false)} className="btn btn-sm flex-1">
+              Xem tất cả
+            </Link>
+          </div>
         }
       >
         <ul className="divide-y divide-line">
           {notifications.map((n) => {
-            const isRead = n.read || read.includes(n.id);
+            const isRead = reads.isRead(n.id, n.read);
             return (
               <li key={n.id}>
                 <Link
                   href={n.href ?? "#"}
                   onClick={() => {
-                    setRead((p) => [...p, n.id]);
+                    reads.markRead(n.id);
                     setNotifOpen(false);
                   }}
                   className={cn("flex gap-3 px-5 py-3.5 transition-colors hover:bg-surface", !isRead && "bg-surface")}

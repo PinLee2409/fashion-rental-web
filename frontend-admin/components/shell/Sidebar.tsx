@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import {
+  IconBell,
   IconBox,
   IconCalendar,
   IconChart,
@@ -28,6 +29,7 @@ import { NAV, type NavItem } from "./nav";
 
 const ICONS: Record<string, (p: { width?: number; height?: number; className?: string }) => ReactNode> = {
   grid: IconGrid,
+  bell: IconBell,
   list: IconList,
   calendar: IconCalendar,
   scan: IconScan,

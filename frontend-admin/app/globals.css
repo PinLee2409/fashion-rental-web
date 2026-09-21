@@ -469,6 +469,30 @@
   scrollbar-width: none;
 }
 
+/* Vệt mờ ở mép phải của một dải cuộn ngang đã ẩn thanh cuộn — dấu hiệu duy nhất
+   cho biết còn nội dung phía sau. Chỉ bật khi dải thật sự đang cuộn ngang:
+   `@container` cha đủ rộng thì lớp `@2xl:overflow-visible` cho chip xuống hàng,
+   lúc đó không được làm mờ chip cuối. */
+.scroll-hint-x {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent 100%);
+}
+@supports (animation-timeline: scroll()) {
+  /* Trình duyệt hỗ trợ scroll-driven animation thì vệt mờ tắt dần khi cuộn tới
+     cuối, thay vì lúc nào cũng mờ sẵn. */
+  .scroll-hint-x {
+    animation: scroll-hint-fade linear both;
+    animation-timeline: scroll(self inline);
+    animation-range: contain;
+  }
+}
+@keyframes scroll-hint-fade {
+  to {
+    -webkit-mask-image: linear-gradient(to right, #000 100%, #000 100%);
+    mask-image: linear-gradient(to right, #000 100%, #000 100%);
+  }
+}
+
 .hide-spin::-webkit-outer-spin-button,
 .hide-spin::-webkit-inner-spin-button {
   -webkit-appearance: none;

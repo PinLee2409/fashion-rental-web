@@ -75,7 +75,7 @@ export default function ReportsPage() {
       header: "Ngày cho thuê",
       align: "right",
       width: "120px",
-      hideBelow: "lg",
+      hideBelow: "3xl",
       sortValue: (r) => r.daysRented,
       render: (r) => <span className="num text-[12.5px]">{r.daysRented}</span>,
     },

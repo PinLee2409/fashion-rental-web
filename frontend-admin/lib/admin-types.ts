@@ -217,6 +217,42 @@ export interface OpsNotification {
 }
 
 /* ==========================================================================
+   Nhật ký hoạt động
+   ========================================================================== */
+
+export type AuditAction =
+  | "order.create"
+  | "order.cancel"
+  | "order.expire"
+  | "order.return_inspect"
+  | "refund.approve"
+  | "fee.waive"
+  | "unit.assign"
+  | "unit.lifecycle"
+  | "catalog.manage"
+  | "promotion.manage"
+  | "user.manage"
+  | "role.manage"
+  | "settings.update";
+
+export type AuditTargetType = "order" | "unit" | "product" | "promotion" | "user" | "role" | "setting";
+
+/** Một dòng vết truy: ai, lúc nào, làm gì, trên bản ghi nào. */
+export interface AuditLog {
+  id: string;
+  at: string;
+  /** id trong STAFF, hoặc "system" khi là tác vụ nền */
+  actorId: string;
+  action: AuditAction;
+  targetType: AuditTargetType;
+  targetLabel: string;
+  summary: string;
+  /** Số tiền liên quan, nếu thao tác đụng tới tiền */
+  amount?: number;
+  href?: string;
+}
+
+/* ==========================================================================
    Hàng đợi vận hành trong ngày (A01)
    ========================================================================== */
 

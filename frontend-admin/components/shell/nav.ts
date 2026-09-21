@@ -80,6 +80,7 @@ export const NAV: NavGroup[] = [
   {
     title: "Hệ thống",
     items: [
+      { href: "/notifications", label: "Thông báo", icon: "bell" },
       {
         href: "/settings",
         label: "Cài đặt",
@@ -89,6 +90,7 @@ export const NAV: NavGroup[] = [
           { href: "/settings", label: "Cấu hình vận hành" },
           { href: "/settings/roles", label: "Vai trò & phân quyền", permissions: ["role.manage"] },
           { href: "/settings/users", label: "Người dùng", permissions: ["user.manage"] },
+          { href: "/settings/audit", label: "Nhật ký hoạt động", permissions: ["role.manage"] },
         ],
       },
     ],

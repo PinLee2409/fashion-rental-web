@@ -133,7 +133,10 @@ export function Toolbar({
       </div>
 
       {quickFilters && quickFilters.length > 0 && onQuickChange && (
-        <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-0.5">
+        /* Dải lọc nhanh: trên mobile cuộn ngang (kèm vệt mờ mép phải để biết còn
+           chip phía sau), từ tablet trở lên xuống hàng cho thấy hết — trước đây
+           luôn cuộn ngang mà lại ẩn thanh cuộn nên không ai biết còn bộ lọc. */
+        <div className="no-scrollbar scroll-hint-x flex gap-1.5 overflow-x-auto pb-0.5 @2xl:flex-wrap @2xl:overflow-visible @2xl:[animation:none] @2xl:[mask-image:none]">
           {quickFilters.map((q) => {
             const active = activeQuick === q.key;
             return (
@@ -222,13 +225,25 @@ export function StatCard({
   }[tone];
 
   const inner = (
-    <div className={cn("card card-pad h-full transition-colors", href && "hover:border-ink-3")}>
+    <div className={cn("card card-pad flex h-full flex-col transition-colors", href && "hover:border-ink-3")}>
       <div className="flex items-start justify-between gap-2">
-        <p className="text-[12px] text-ink-2">{label}</p>
-        {icon && <span className={cn("text-ink-3", alert && "text-danger")}>{icon}</span>}
+        {/* min-h giữ hai dòng chỗ trống: nhãn dài ("Doanh thu thuê 30 ngày") xuống
+            hàng còn nhãn ngắn thì không, nếu không ép chiều cao thì các con số
+            trong cùng một hàng lệch chân nhau. */}
+        <p className="min-h-[2.4em] text-[12px] leading-snug text-ink-2">{label}</p>
+        {icon && <span className={cn("shrink-0 text-ink-3", alert && "text-danger")}>{icon}</span>}
       </div>
-      <p className={cn("num mt-2 break-words text-[24px] font-medium leading-none", valueTone)}>{value}</p>
-      {sub && <p className="mt-2 text-[11.5px] leading-snug text-ink-3">{sub}</p>}
+      {/* Số tiền không được ngắt giữa chừng ("22.070.00 / 0đ") — thu nhỏ cỡ chữ
+          theo bề rộng ô thay vì cho xuống dòng. */}
+      <p
+        className={cn(
+          "num mt-1 text-[clamp(17px,1.35cqw+11px,24px)] font-medium leading-tight whitespace-nowrap",
+          valueTone,
+        )}
+      >
+        {value}
+      </p>
+      {sub && <p className="mt-auto pt-2 text-[11.5px] leading-snug text-ink-3">{sub}</p>}
     </div>
   );
 

@@ -42,6 +42,28 @@ Component React dùng chung: `DataTable`, `PageHeader`, `Toolbar`, `ActiveFilter
 
 Microinteraction 150–250ms · drawer 280ms · modal 200ms · menu 200ms. Không parallax, không hiệu ứng trang trí — chuyển động chỉ để định hướng và phản hồi. Tôn trọng `prefers-reduced-motion`.
 
+### Bố cục co giãn — đo theo container, không theo viewport
+
+Thanh bên chiếm cố định 244px (64px khi thu gọn), nên breakpoint theo viewport luôn lệch đúng chừng đó: ở màn 14" (1280px) bảng chỉ còn ~996px để vẽ nhưng `xl:` vẫn coi như có đủ 1280px và bung hết cột — kết quả là bảng tràn ngang, dòng cao gấp đôi vì chữ xuống hàng.
+
+Vì vậy vùng nội dung trong `AdminShell` mang lớp `@container`, và mọi quyết định bố cục bên trong dùng container query (`@3xl:`, `@5xl:`…). Ưu điểm là bảng phản ứng đúng cả khi thanh bên đang mở lẫn khi thu gọn, không cần biết viewport rộng bao nhiêu.
+
+`Column.hideBelow` của `DataTable` nhận mốc **container**; bảng quy đổi sang viewport (khi thanh bên mở) nằm ngay trong `components/ui/DataTable.tsx`:
+
+| `hideBelow` | Container | ≈ Viewport |
+| --- | --- | --- |
+| `2xl` | 672px | ~956px |
+| `3xl` | 768px | ~1052px |
+| `4xl` | 896px | ~1180px |
+| `5xl` | 1024px | ~1308px |
+| `6xl` | 1152px | ~1436px |
+| `7xl` | 1280px | ~1564px |
+
+Hai quy ước đi kèm khi thêm cột mới:
+
+- **Cột nào cũng phải có `width`** nếu nội dung là chuỗi dài. Để `auto`, min-content của nó kéo cả bảng rộng hơn vùng chứa dù ô đã `truncate`.
+- **Dải cuộn ngang ẩn thanh cuộn** (`.no-scrollbar`) phải kèm `.scroll-hint-x` — vệt mờ mép phải, dấu hiệu duy nhất cho biết còn nội dung phía sau. Từ `@2xl` trở lên chip nên xuống hàng thay vì cuộn.
+
 ---
 
 ## 2. Điều hướng theo vai trò
@@ -85,6 +107,8 @@ Hành động trong màn hình cũng theo quyền: nhân viên kho không thấy
 | `/customers` · `/customers/[id]` | A13 | Hồ sơ vận hành: lịch sử thuê, số lần trả trễ, sự cố hư hỏng, số đo |
 | `/reports` | A14 | Doanh thu · tỷ lệ khai thác · tồn ế |
 | `/settings` · `/settings/roles` · `/settings/users` | A15 | Cấu hình vận hành (PHỤ LỤC A), ma trận phân quyền, người dùng |
+| `/settings/audit` | — | Nhật ký hoạt động: ai duyệt tiền, đổi phân quyền, sửa cấu hình — lọc theo người, nhóm hành động, khoảng ngày (chỉ Admin) |
+| `/notifications` | — | Trung tâm thông báo: lọc theo nhóm việc, đánh dấu đã / chưa đọc, đồng bộ với chuông trên header |
 | `/approvals` | — | Hàng đợi duyệt của quản lý, suy ra từ BR-23 và BR-33 |
 | `/login` | — | Đăng nhập nhân viên vận hành, render ngoài khung admin |
 | `/products/new` | A06 | Tạo sản phẩm: sinh biến thể size × màu, bảng giá tự tính, xem trước mã cá thể kèm QR |

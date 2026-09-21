@@ -87,8 +87,8 @@ export default function ProductsPage() {
     {
       key: "category",
       header: "Danh mục",
-      width: "150px",
-      hideBelow: "md",
+      width: "138px",
+      hideBelow: "4xl",
       sortValue: (p) => p.categorySlug,
       render: (p) => <span className="text-[12px] text-ink-2">{getCategory(p.categorySlug)?.name}</span>,
     },
@@ -96,7 +96,8 @@ export default function ProductsPage() {
       key: "variants",
       header: "Biến thể",
       align: "right",
-      width: "84px",
+      width: "78px",
+      hideBelow: "3xl",
       sortValue: (p) => p.variants.length,
       render: (p) => <span className="num text-[12.5px]">{p.variants.length}</span>,
     },
@@ -104,7 +105,7 @@ export default function ProductsPage() {
       key: "price",
       header: "Giá thuê / ngày",
       align: "right",
-      width: "130px",
+      width: "118px",
       sortValue: (p) => fromPricePerDay(p.variants),
       render: (p) => <span className="num text-[12.5px]">{formatVnd(fromPricePerDay(p.variants))}</span>,
     },
@@ -112,16 +113,16 @@ export default function ProductsPage() {
       key: "deposit",
       header: "Cọc",
       align: "right",
-      width: "120px",
-      hideBelow: "lg",
+      width: "104px",
+      hideBelow: "5xl",
       sortValue: (p) => minDeposit(p.variants),
       render: (p) => <span className="num text-[12.5px] text-ink-2">{formatVnd(minDeposit(p.variants))}</span>,
     },
     {
       key: "units",
       header: "Cá thể sẵn sàng",
-      width: "160px",
-      hideBelow: "lg",
+      width: "142px",
+      hideBelow: "4xl",
       sortValue: (p) => {
         const s = stats.get(p.slug);
         return s ? s.available / Math.max(1, s.total) : 0;
@@ -145,13 +146,14 @@ export default function ProductsPage() {
     {
       key: "status",
       header: "Trạng thái",
-      width: "110px",
+      width: "104px",
+      hideBelow: "2xl",
       render: (p) => (p.isNew ? <StatusChip tone="info">Mới về</StatusChip> : <StatusChip tone="success">Đang bán</StatusChip>),
     },
     {
       key: "actions",
       header: "",
-      width: "102px",
+      width: "92px",
       align: "right",
       render: (p) => (
         <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>

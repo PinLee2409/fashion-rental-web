@@ -5,7 +5,15 @@
       "name": "stylerent-web",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "frontend", "run", "dev"],
-      "port": 3000
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "stylerent-admin",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "frontend-admin", "run", "dev"],
+      "port": 3001,
+      "autoPort": true
     }
   ]
 }

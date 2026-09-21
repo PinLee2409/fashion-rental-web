@@ -43,7 +43,7 @@ export default function OrdersPage() {
         </p>
       </Reveal>
 
-      <div className="no-scrollbar mb-8 flex gap-1 overflow-x-auto border-b border-line">
+      <div className="no-scrollbar scroll-hint-x mb-8 flex gap-1 overflow-x-auto border-b border-line">
         {ORDER_TABS.map((item) => {
           const count = ORDERS.filter((order) => matchesTab(order, item.key)).length;
           return (

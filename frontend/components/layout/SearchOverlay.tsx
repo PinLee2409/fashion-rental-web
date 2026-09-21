@@ -1,22 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ProductMedia } from "@/components/product/ProductMedia";
 import { IconClose, IconSearch } from "@/components/ui/Icons";
 import { FullOverlay } from "@/components/ui/Overlay";
 import { CATEGORIES } from "@/data/catalog";
-import { PRODUCTS } from "@/data/products";
 import { usePersistentState } from "@/hooks";
 import { formatVnd } from "@/lib/money";
 import { fromPricePerDay } from "@/lib/pricing";
+import { searchProducts } from "@/lib/search";
 import type { Product } from "@/lib/types";
-import { deaccent } from "@/lib/utils";
 import { OCCASION_LINKS } from "./nav-data";
 
 const TRENDING = ["áo dài cưới", "đầm dạ hội", "vest nam", "váy cưới", "đồ biểu diễn"];
 
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [recent, setRecent] = usePersistentState<string[]>("stylerent.recent-search.v1", []);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -30,21 +31,22 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
     }
   }, [open]);
 
-  const results = useMemo<Product[]>(() => {
-    const q = deaccent(query.trim());
-    if (q.length < 2) return [];
-    return PRODUCTS.filter((p) => {
-      const haystack = deaccent(
-        `${p.name} ${p.brandLine} ${p.material} ${p.categorySlug} ${p.occasions.join(" ")} ${p.description}`,
-      );
-      return q.split(/\s+/).every((token) => haystack.includes(token));
-    }).slice(0, 6);
-  }, [query]);
+  const all = useMemo<Product[]>(() => searchProducts(query), [query]);
+  const results = useMemo(() => all.slice(0, 6), [all]);
 
   function remember(term: string) {
     const cleaned = term.trim();
     if (cleaned.length < 2) return;
     setRecent((prev) => [cleaned, ...prev.filter((r) => r !== cleaned)].slice(0, 5));
+  }
+
+  /** Enter (hoặc "Xem tất cả") đưa sang /search — kết quả có URL để lưu, chia sẻ. */
+  function goToResults(term: string) {
+    const cleaned = term.trim();
+    if (cleaned.length < 2) return;
+    remember(cleaned);
+    onClose();
+    router.push(`/search?q=${encodeURIComponent(cleaned)}`);
   }
 
   return (
@@ -57,9 +59,9 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && results[0]) {
-                remember(query);
-                onClose();
+              if (e.key === "Enter") {
+                e.preventDefault();
+                goToResults(query);
               }
             }}
             placeholder="Tìm trang phục, dịp sử dụng, danh mục..."
@@ -145,13 +147,30 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
               <p className="lede mx-auto mt-4 max-w-[46ch] text-[14px]">
                 Thử từ khoá ngắn hơn, hoặc duyệt theo danh mục và dịp sử dụng.
               </p>
-              <Link href="/collections/tat-ca" onClick={onClose} className="btn btn-outline mt-8">
-                Xem toàn bộ bộ sưu tập
-              </Link>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <button type="button" onClick={() => goToResults(query)} className="btn">
+                  Mở trang tìm kiếm
+                </button>
+                <Link href="/collections/tat-ca" onClick={onClose} className="btn btn-outline">
+                  Xem toàn bộ bộ sưu tập
+                </Link>
+              </div>
             </div>
           ) : (
             <div>
-              <p className="eyebrow text-ink-3">{results.length} kết quả</p>
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <p className="eyebrow text-ink-3">
+                  {all.length} kết quả
+                  {all.length > results.length && <span className="ml-1.5 normal-case tracking-normal">· đang xem {results.length}</span>}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => goToResults(query)}
+                  className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]"
+                >
+                  Xem tất cả kết quả
+                </button>
+              </div>
               <div className="mt-6 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
                 {results.map((product) => (
                   <Link

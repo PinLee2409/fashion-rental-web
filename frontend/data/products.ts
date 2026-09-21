@@ -25,7 +25,7 @@ function colorCode(color: string): string {
   return deaccent(color).replace(/[^a-z]/g, "").slice(0, 2).toUpperCase();
 }
 
-const WOMEN_CHART = [
+export const WOMEN_CHART = [
   { size: "XS", bust: "78 – 82", waist: "60 – 63", hip: "86 – 89", length: "135" },
   { size: "S", bust: "83 – 86", waist: "64 – 67", hip: "90 – 93", length: "137" },
   { size: "M", bust: "87 – 90", waist: "68 – 71", hip: "94 – 97", length: "139" },
@@ -33,14 +33,14 @@ const WOMEN_CHART = [
   { size: "XL", bust: "96 – 100", waist: "77 – 82", hip: "103 – 107", length: "143" },
 ];
 
-const MEN_CHART = [
+export const MEN_CHART = [
   { size: "S", bust: "88 – 92", waist: "74 – 78", hip: "90 – 94", length: "70" },
   { size: "M", bust: "93 – 97", waist: "79 – 83", hip: "95 – 99", length: "72" },
   { size: "L", bust: "98 – 102", waist: "84 – 88", hip: "100 – 104", length: "74" },
   { size: "XL", bust: "103 – 108", waist: "89 – 94", hip: "105 – 110", length: "76" },
 ];
 
-const FREE_CHART = [{ size: "Free", bust: "—", waist: "—", hip: "—", length: "Một cỡ" }];
+export const FREE_CHART = [{ size: "Free", bust: "—", waist: "—", hip: "—", length: "Một cỡ" }];
 
 interface ColorSeed {
   name: string;

@@ -13,7 +13,7 @@ import { EmptyState, KeyValue, MoreMenu, Skeleton, StatusChip } from "@/componen
 import { useToast } from "@/components/ui/Toast";
 import { ORDERS, customerOfOrder } from "@/data/operations";
 import { useMounted } from "@/hooks";
-import { describeDaysLeft, formatDate, formatDateTime, todayISO } from "@/lib/date";
+import { describeDaysLeft, formatDate, formatDateShort, formatDateTime, todayISO } from "@/lib/date";
 import { formatVnd } from "@/lib/money";
 import { canCancel, ORDER_STATUS } from "@/lib/order-status";
 import type { Order, OrderStatus, PickupMethod } from "@/lib/types";
@@ -138,11 +138,11 @@ function OrdersView() {
     {
       key: "code",
       header: "Mã đơn",
-      width: "170px",
+      width: "152px",
       sortValue: (o) => o.code,
       render: (o) => (
         <div className="flex flex-col gap-1">
-          <Link href={`/orders/${o.code}`} className="num text-[12.5px] underline-offset-2 hover:underline">
+          <Link href={`/orders/${o.code}`} className="num whitespace-nowrap text-[12.5px] underline-offset-2 hover:underline">
             {o.code}
           </Link>
           <span data-row-detail className="text-[11px] text-ink-3">
@@ -165,7 +165,9 @@ function OrdersView() {
     {
       key: "items",
       header: "Món thuê",
-      hideBelow: "lg",
+      // Cột tốn chỗ nhất (ảnh + tên sản phẩm) — chỉ bung khi thật sự còn chỗ.
+      hideBelow: "7xl",
+      width: "180px",
       render: (o) => (
         <div className="flex items-center gap-2">
           <div className="flex -space-x-1.5">
@@ -183,11 +185,14 @@ function OrdersView() {
     {
       key: "period",
       header: "Kỳ thuê",
+      width: "146px",
       sortValue: (o) => o.pickupDate,
       render: (o) => (
         <div>
-          <p className="num text-[12.5px]">
-            {formatDate(o.pickupDate)} → {formatDate(o.returnDate)}
+          {/* Ngày nhận bỏ năm — cùng năm với ngày trả ở hầu hết đơn, giữ cả hai
+              năm làm ô rộng thêm ~40px và đẩy dòng xuống hai hàng. */}
+          <p className="num whitespace-nowrap text-[12.5px]">
+            {formatDateShort(o.pickupDate)} → {formatDate(o.returnDate)}
           </p>
           <p data-row-detail className="text-[11px] text-ink-3">
             {o.items[0].days} ngày
@@ -203,8 +208,8 @@ function OrdersView() {
     {
       key: "method",
       header: "Nhận đồ",
-      hideBelow: "xl",
-      width: "110px",
+      hideBelow: "5xl",
+      width: "96px",
       render: (o) => (
         <span className="inline-flex items-center gap-1.5 text-[12.5px] text-ink-2">
           {o.pickupMethod === "at_store" ? <IconStore width={13} height={13} /> : <IconTruck width={13} height={13} />}
@@ -215,8 +220,8 @@ function OrdersView() {
     {
       key: "payment",
       header: "Thanh toán",
-      hideBelow: "md",
-      width: "132px",
+      hideBelow: "3xl",
+      width: "122px",
       sortValue: (o) => o.paidAmount / Math.max(1, o.grandTotal),
       render: (o) => {
         const done = o.paidAmount >= o.grandTotal;
@@ -235,15 +240,15 @@ function OrdersView() {
       key: "deposit",
       header: "Cọc giữ",
       align: "right",
-      hideBelow: "xl",
-      width: "110px",
+      hideBelow: "6xl",
+      width: "104px",
       sortValue: (o) => o.totalDeposit,
       render: (o) => <span className="num text-[12.5px] text-ink-2">{formatVnd(o.totalDeposit)}</span>,
     },
     {
       key: "status",
       header: "Trạng thái",
-      width: "150px",
+      width: "136px",
       sortValue: (o) => ORDER_STATUS[o.status].label,
       render: (o) => <OrderStatusChip status={o.status} />,
     },
@@ -251,14 +256,15 @@ function OrdersView() {
       key: "total",
       header: "Giá trị đơn",
       align: "right",
-      width: "120px",
+      hideBelow: "4xl",
+      width: "110px",
       sortValue: (o) => o.grandTotal,
       render: (o) => <span className="num text-[13px]">{formatVnd(o.grandTotal)}</span>,
     },
     {
       key: "actions",
       header: "",
-      width: "104px",
+      width: "92px",
       align: "right",
       render: (o) => (
         <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>

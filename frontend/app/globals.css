@@ -474,6 +474,28 @@
   scrollbar-width: none;
 }
 
+/* Vệt mờ mép phải cho dải cuộn ngang đã ẩn thanh cuộn — nếu không có, người
+   dùng trên điện thoại không biết còn mục phía sau (thanh tài khoản có 6 mục,
+   màn 360px chỉ thấy 2). Dải nào tự đủ chỗ thì mask không lộ ra. */
+.scroll-hint-x {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent 100%);
+}
+@supports (animation-timeline: scroll()) {
+  /* Nơi hỗ trợ scroll-driven animation: vệt mờ tan dần khi cuộn tới cuối dải. */
+  .scroll-hint-x {
+    animation: sr-scroll-hint linear both;
+    animation-timeline: scroll(self inline);
+    animation-range: contain;
+  }
+}
+@keyframes sr-scroll-hint {
+  to {
+    -webkit-mask-image: linear-gradient(to right, #000 100%, #000 100%);
+    mask-image: linear-gradient(to right, #000 100%, #000 100%);
+  }
+}
+
 .hide-number-spin::-webkit-outer-spin-button,
 .hide-number-spin::-webkit-inner-spin-button {
   -webkit-appearance: none;

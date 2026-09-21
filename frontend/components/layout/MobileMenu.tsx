@@ -90,6 +90,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             { label: "Tài khoản của tôi", href: "/account" },
             { label: "Đơn thuê", href: "/account/rentals" },
             { label: "Yêu thích", href: "/wishlist" },
+            { label: "Bảng size & gợi ý size", href: "/size-guide" },
             { label: "Thuê đồ hoạt động thế nào", href: "/how-it-works" },
             { label: "Chính sách thuê & hoàn cọc", href: "/policies" },
           ].map((link, i) => (

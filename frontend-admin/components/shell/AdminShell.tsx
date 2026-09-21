@@ -47,7 +47,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
       >
         <Header onOpenSidebar={() => setMobileOpen(true)} collapsed={collapsed} onToggleSidebar={() => setCollapsed(!collapsed)} />
         <main className="flex-1 px-3 py-4 sm:px-5 sm:py-6">
-          <div className="mx-auto w-full max-w-[1560px]">{children}</div>
+          {/* @container — mọi bố cục bên trong đo theo bề rộng thật của vùng nội
+              dung chứ không theo viewport. Thanh bên chiếm 244px (hoặc 64px khi
+              thu gọn), nên `lg:` / `xl:` tính theo viewport luôn lệch đúng bằng
+              chừng đó: ở màn 14" bảng vẫn bung đủ cột rồi tràn ngang. */}
+          <div className="@container mx-auto w-full max-w-[1560px]">{children}</div>
         </main>
       </div>
     </div>

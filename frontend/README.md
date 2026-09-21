@@ -81,8 +81,10 @@ Thư mục route đặt bằng tiếng Anh; slug dữ liệu (danh mục, sản 
 /account/reviews                      Đánh giá (chờ viết + đã viết)
 /account/notifications                Thông báo
 /wishlist                        S13  Danh sách yêu thích
+/search?q=                       —    Trang kết quả tìm kiếm: lọc theo danh mục & dịp, sắp xếp, gợi ý khi không có kết quả
+/size-guide                      —    Bảng size nữ/nam + gợi ý size từ số đo của khách
 /login · /register               S11  Xác thực
-/how-it-works · /policies        S12  Hướng dẫn thuê, FAQ, bảng size, chính sách
+/how-it-works · /policies        S12  Hướng dẫn thuê, FAQ, chính sách
 ```
 
 ---
