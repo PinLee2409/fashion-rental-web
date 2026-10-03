@@ -83,7 +83,7 @@ export function Header() {
             href="/"
             className={cn(
               'absolute left-1/2 -translate-x-1/2 font-display transition-all duration-500 ease-luxe lg:hidden',
-              compact ? 'text-[19px]' : 'text-[21px]',
+              compact ? 'text-[19px]' : 'text-[19px] sm:text-[21px]',
               solid ? 'text-ink' : 'text-canvas',
             )}
             style={{ letterSpacing: '0.04em' }}
@@ -108,19 +108,19 @@ export function Header() {
           </nav>
 
           {/* Phải — hành động */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             <button
               type="button"
               aria-label="Tìm kiếm"
               onClick={() => setSearchOpen(true)}
-              className={cn("p-2.5 transition-colors", solid ? "text-ink hover:text-accent" : "text-canvas")}
+              className={cn("p-2 transition-colors sm:p-2.5", solid ? "text-ink hover:text-accent" : "text-canvas")}
             >
               <IconSearch />
             </button>
             <Link
               href="/wishlist"
               aria-label="Yêu thích"
-              className={cn("relative p-2.5 transition-colors", solid ? "text-ink hover:text-accent" : "text-canvas")}
+              className={cn("relative hidden p-2.5 transition-colors sm:block", solid ? "text-ink hover:text-accent" : "text-canvas")}
             >
               <IconHeart />
               {mounted && wishlist.count > 0 && <Badge count={wishlist.count} solid={solid} />}
@@ -140,7 +140,7 @@ export function Header() {
               aria-label="Giỏ thuê"
               onClick={() => setBagOpen(true)}
               className={cn(
-                "relative -mr-2 p-2.5 transition-colors",
+                "relative -mr-2 p-2 transition-colors sm:p-2.5",
                 solid ? "text-ink hover:text-accent" : "text-canvas",
               )}
             >

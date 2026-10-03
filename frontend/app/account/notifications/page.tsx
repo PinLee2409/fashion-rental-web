@@ -54,7 +54,7 @@ export default function NotificationsPage() {
                 type="button"
                 onClick={() => setItems((prev) => prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)))}
                 className={cn(
-                  "flex w-full items-start gap-4 px-1 py-5 text-left transition-colors hover:bg-warm",
+                  "flex w-full flex-wrap items-start gap-x-4 gap-y-1 px-1 py-5 text-left transition-colors hover:bg-warm sm:flex-nowrap",
                   !n.read && "bg-warm/50",
                 )}
               >
@@ -69,7 +69,7 @@ export default function NotificationsPage() {
                     </Link>
                   )}
                 </span>
-                <span className="shrink-0 text-[11.5px] text-ink-3">{formatDateTime(n.createdAt)}</span>
+                <span className="ml-5 text-[11.5px] text-ink-3 sm:ml-0 sm:shrink-0">{formatDateTime(n.createdAt)}</span>
               </button>
             </Reveal>
           ))}

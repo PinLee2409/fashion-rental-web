@@ -340,7 +340,7 @@ export function SegmentedControl<T extends string>({
   size?: "sm" | "md";
 }) {
   return (
-    <div className="inline-flex rounded-md border border-line bg-surface p-0.5">
+    <div className="inline-flex shrink-0 rounded-md border border-line bg-surface p-0.5">
       {options.map((o) => (
         <button
           key={o.key}
@@ -348,7 +348,7 @@ export function SegmentedControl<T extends string>({
           title={o.title}
           onClick={() => onChange(o.key)}
           className={cn(
-            "rounded-[3px] px-2.5 transition-colors",
+            "whitespace-nowrap rounded-[3px] px-2.5 transition-colors",
             size === "sm" ? "h-[24px] text-[12px]" : "h-[28px] text-[12.5px]",
             value === o.key ? "bg-ink text-white" : "text-ink-2 hover:text-ink",
           )}

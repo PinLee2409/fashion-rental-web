@@ -75,7 +75,7 @@ export function RentalDatePicker({
   );
 
   const canGoPrev = anchor > `${today.slice(0, 7)}-01`;
-  const canGoNext = addMonths(anchor, months) <= `${bookWindow.max.slice(0, 7)}-01`;
+  const canGoNext = addMonths(anchor, 1) <= `${bookWindow.max.slice(0, 7)}-01`;
 
   function handlePick(date: ISODate, level: AvailabilityLevel) {
     if (level === "none" || level === "closed") return;
@@ -131,8 +131,8 @@ export function RentalDatePicker({
           <IconArrowLeft width={16} height={16} />
         </button>
         <div className="flex flex-1 justify-around">
-          {calendars.map((c) => (
-            <p key={c.monthAnchor} className="text-[13px] tracking-[0.04em]">
+          {calendars.map((c, index) => (
+            <p key={c.monthAnchor} className={cn("text-[13px] tracking-[0.04em]", index > 0 && months === 2 && "hidden md:block")}>
               {formatMonthTitle(c.monthAnchor)}
             </p>
           ))}
@@ -303,4 +303,3 @@ export function DateRangeSummary({
     </div>
   );
 }
-

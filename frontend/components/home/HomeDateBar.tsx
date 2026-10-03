@@ -23,9 +23,9 @@ export function HomeDateBar() {
     <>
       <div className="border-b border-line bg-canvas">
         <div className="shell flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-start gap-3 sm:items-center">
             <IconCalendar className="shrink-0 text-ink-2" />
-            <div>
+            <div className="min-w-0">
               <p className="text-[13.5px]">
                 {mounted && hasRange ? (
                   <>
@@ -44,7 +44,7 @@ export function HomeDateBar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             {mounted && hasRange && (
               <button
                 type="button"

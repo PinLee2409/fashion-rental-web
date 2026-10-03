@@ -24,7 +24,7 @@ export function ImageGallery({ images, name }: { images: ProductImage[]; name: s
   return (
     <>
       {/* Mobile — vuốt ngang */}
-      <div className="relative md:hidden">
+      <div className="relative mx-auto sm:max-w-[520px] lg:hidden lg:max-w-none">
         <div
           ref={trackRef}
           onScroll={onScroll}
@@ -55,7 +55,7 @@ export function ImageGallery({ images, name }: { images: ProductImage[]; name: s
       </div>
 
       {/* Desktop — bố cục biên tập */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <div className="grid grid-cols-2 gap-2">
           <div className="col-span-2">
             <ProductMedia image={images[0]} ratio="5/7" className="animate-image-reveal" />

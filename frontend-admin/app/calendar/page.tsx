@@ -69,7 +69,7 @@ export default function CalendarPage() {
         description="Mỗi hàng là một cá thể vật lý. Thanh đậm là thời gian khách giữ đồ, phần gạch chéo là ngày đệm giặt ủi — cả hai đều chặn đơn mới."
         breadcrumb={[{ label: "Vận hành" }, { label: "Lịch thuê" }]}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button type="button" onClick={() => setOffset((o) => o - days)} className="btn btn-outline btn-sm btn-icon" aria-label="Kỳ trước">
               <IconArrowLeft width={14} height={14} />
             </button>

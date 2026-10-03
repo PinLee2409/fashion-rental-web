@@ -110,11 +110,11 @@ export function formatRange(pickup: ISODate, returnDate: ISODate): string {
   return `${formatDateShort(pickup)} → ${formatDateShort(returnDate)}`;
 }
 
-/** "12/10/2026 18:00" */
+/** "12/10/2026 18:00" — luôn hiển thị theo giờ Việt Nam trên server và client. */
 export function formatDateTime(isoDateTime: string): string {
-  const d = new Date(isoDateTime);
-  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(
-    d.getMinutes(),
+  const d = new Date(new Date(isoDateTime).getTime() + 7 * 3600_000);
+  return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()} ${pad(d.getUTCHours())}:${pad(
+    d.getUTCMinutes(),
   )}`;
 }
 

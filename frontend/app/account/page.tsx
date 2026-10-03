@@ -42,7 +42,7 @@ export default function AccountOverviewPage() {
     <div className="space-y-14">
       {/* Cần xử lý */}
       <section>
-        <Reveal as="header" className="flex items-end justify-between gap-4 pb-5">
+        <Reveal as="header" className="flex flex-col items-start gap-2 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
           <h2 className="display-3">Cần bạn để mắt</h2>
           <Link href="/account/rentals" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
             Tất cả đơn thuê
@@ -64,7 +64,7 @@ export default function AccountOverviewPage() {
 
       {/* Thông báo */}
       <section>
-        <Reveal as="header" className="flex items-end justify-between gap-4 pb-5">
+        <Reveal as="header" className="flex flex-col items-start gap-2 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
           <h2 className="display-3">Thông báo gần đây</h2>
           <Link href="/account/notifications" className="link-line link-underline-in text-[11.5px] uppercase tracking-[0.14em]">
             Xem tất cả
@@ -72,13 +72,13 @@ export default function AccountOverviewPage() {
         </Reveal>
         <ul className="divide-y divide-line border-y border-line">
           {NOTIFICATIONS.slice(0, 3).map((n, i) => (
-            <Reveal as="li" key={n.id} delay={i * 60} className="flex items-start gap-4 py-4">
+            <Reveal as="li" key={n.id} delay={i * 60} className="flex flex-wrap items-start gap-x-4 gap-y-1 py-4 sm:flex-nowrap">
               <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${n.read ? "bg-line" : "bg-accent"}`} />
               <div className="min-w-0 flex-1">
                 <p className="text-[13.5px]">{n.title}</p>
                 <p className="mt-1 text-[12.5px] leading-relaxed text-ink-2">{n.body}</p>
               </div>
-              <span className="shrink-0 text-[11.5px] text-ink-3">{formatDateTime(n.createdAt)}</span>
+              <span className="ml-5 text-[11.5px] text-ink-3 sm:ml-0 sm:shrink-0">{formatDateTime(n.createdAt)}</span>
             </Reveal>
           ))}
         </ul>
